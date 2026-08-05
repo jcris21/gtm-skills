@@ -125,3 +125,11 @@ To generate campaigns from these signals, pass the signal data above into the Em
 5. **Always produce a fallback.** Even if you find strong signals, include a fallback approach for when those signals don't apply to other prospects in the same segment.
 6. **Flag what you couldn't find.** If key pages were unavailable or data was limited, say so. Don't fabricate signals.
 7. **Enrichment data trumps guesses.** If the user provides Clay/Apollo data, prioritize that over inferences from the website.
+
+## Step 6: Log to Attio CRM
+
+Before this signal analysis feeds `/creative-variable` or `/email-writer` / `/linkedin-dm`, log it in Attio:
+
+1. **Ensure the Person + Company exist** — `search-records` first (object `people` / `companies`). If missing, create the Company (`upsert-record`, matching on `domains`) then the Person (`create-record`, linked to the Company via `company`).
+2. **Attach the signal scan as a note** — `create-note` on the Person record, following the "Signal Analysis Note" format in `context/crm/attio-schema.md` (title `Signal Analysis — [date]`, ranked signals, scores, recommended angles).
+3. **Gate:** this note is a prerequisite, not optional — do not authorize any campaign send that traces back to this scan until it's logged.

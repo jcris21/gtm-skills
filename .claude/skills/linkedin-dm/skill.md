@@ -62,6 +62,15 @@ One follow-up only (LinkedIn DM sequences run shorter than email — 2 touches, 
 
 If any check fails, rewrite before presenting.
 
+### Step 7: Log to Attio CRM — send gate
+
+**No connection note or DM may be sent via Unipile until this step completes.**
+
+1. Confirm the Person + Company records exist in Attio (created upstream by `/signal-builder`'s CRM step).
+2. `create-note` on the Person record: title `Campaign Drafted — [date]`, body = signal used, angle, connection note + follow-up DM text, channel (LinkedIn).
+3. Surface the note's Attio URL to the user alongside the drafted copy.
+4. Explicitly ask the user to authorize the send. Approving the copy is not the same as authorizing the send — ask directly: "¿Envío esto ahora?"
+
 ## Output format
 
 ```
@@ -92,11 +101,23 @@ Word count: [X]
 
 ## Sending via Unipile
 
-Once copy is approved, send it with `utils/unipile.py`:
+**Gate — do not run any of these commands until:**
+- A `Campaign Drafted — [date]` note exists on the Person record in Attio (Step 7 above).
+- The user has explicitly authorized the send (approving copy ≠ authorizing send).
+
+Once both are true, send it with `utils/unipile.py`:
 
 1. Confirm a LinkedIn account is connected in Unipile: `python utils/unipile.py accounts` — need an `account_id` with a LinkedIn account in `OK` status. If none exists, the user must connect one in the Unipile dashboard first; this skill does not manage account connection.
-2. Resolve the prospect's provider id: `python utils/unipile.py find-profile --account-id <id> --identifier <linkedin-url-or-public-id>`.
-3. Send: `python utils/unipile.py send-dm --account-id <id> --recipient <provider-id> --text "<message>"`.
+2. **Pull the exact message text from Attio, never from memory or a placeholder.** Read the `Campaign Drafted — [date]` note on the Person record (`get-note-body`) and copy the "Connection note" / message line verbatim into the send command. Never send test copy, a placeholder, or a paraphrase — the text sent must match the drafted note byte-for-byte.
+3. Resolve the prospect's provider id: `python utils/unipile.py find-profile --account-id <id> --identifier <linkedin-url-or-public-id>`.
+4. Check `network_distance` in the `find-profile` response:
+   - `FIRST_DEGREE` → send a full DM: `python utils/unipile.py send-dm --account-id <id> --recipient <provider-id> --text "<message from Campaign Drafted note>"`.
+   - anything else (`SECOND_DEGREE`, `THIRD_DEGREE`, `OUT_OF_NETWORK`) → send a connection invitation instead: `python utils/unipile.py invite --account-id <id> --provider-id <provider-id> --message "<connection note from Campaign Drafted note, max 300 chars>"`. `send-dm` will fail with `422 no_connection_with_recipient` on anyone who isn't 1st-degree.
+5. **After a successful send**, update Attio: add a `Campaign Sent — [date]` note (per `context/crm/attio-schema.md`'s "Campaign Sent Note" format) quoting the exact text that was sent, and move the `Outbound Pipeline` list entry to stage `Outreach Sent` via `update-list-entry-by-record-id`.
+
+### Local environment note (Windows + AVG)
+
+If `unipile.py` fails with `SSLCertVerificationError`, AVG Antivirus is intercepting HTTPS and its cert isn't in Python's trust store. Prefix the command with the AVG cert bundle: `REQUESTS_CA_BUNDLE="C:\ProgramData\AVG\Antivirus\wscert.pem" python utils/unipile.py ...` (bash) or set it as an env var in PowerShell first. Do not disable SSL verification to work around this.
 
 Requires `UNIPILE_API_KEY` and `UNIPILE_DSN` in `.env` (see `.env.example`).
 

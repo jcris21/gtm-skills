@@ -96,6 +96,14 @@ If the source is free and Claude-Code-accessible (see the list in "What this ski
 
 Skip this step when: the source needs a paid API, the source requires a scraper/Phantombuster, or the prospect list isn't loaded yet. In those cases, hand the spec off as-is.
 
+### Step 8: Log to Attio CRM
+
+If this spec targets a specific prospect (not a segment-level spec with no single target record), log it before handing off to `/email-writer` or `/linkedin-dm`:
+
+1. Confirm the Person + Company records exist in Attio (created upstream by `/signal-builder`'s CRM step — search first, don't recreate).
+2. `create-note` on the Person record: title `Creative Variable Spec — [date]`, body = variable names, archetypes, sources, and rendered examples (skip verbose Claygent prompts — summarize or link out instead).
+3. Skip this step for segment-level specs with no single target prospect — log those against the campaign/offer context instead of a Person record.
+
 ## Output format
 
 ```

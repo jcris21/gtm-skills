@@ -116,6 +116,15 @@ Every email must pass ALL of these checks before delivery:
 
 If any check fails, rewrite the email before presenting it.
 
+### Step 7: Log to Attio CRM — send gate
+
+**No email may be sent, and no handoff to `/attio-crm`'s send step or `/linkedin-dm`'s Unipile send may proceed, until this step completes.**
+
+1. Confirm the Person + Company records exist in Attio (created upstream by `/signal-builder`'s CRM step).
+2. `create-note` on the Person record: title `Campaign Drafted — [date]` (not "Campaign Sent" — that title is reserved for after actual send confirmation), body = signal used, angle, all draft subject lines/message text, channel.
+3. Surface the note's Attio URL to the user alongside the drafted copy.
+4. Explicitly ask the user to authorize the send. Do not send automatically — this skill produces copy and logs it; sending is a separate, human-gated action (see `/linkedin-dm`'s "Sending via Unipile" section or `/attio-crm`'s Campaign Sent note for what happens after authorization).
+
 ## Output format
 
 ```

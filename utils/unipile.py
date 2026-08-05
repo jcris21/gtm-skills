@@ -7,6 +7,7 @@ Usage:
     python utils/unipile.py accounts
     python utils/unipile.py find-profile --account-id <id> --identifier https://www.linkedin.com/in/someone/
     python utils/unipile.py send-dm --account-id <id> --recipient <provider-id-or-identifier> --text "..."
+    python utils/unipile.py invite --account-id <id> --provider-id <id> --message "..."
 
 Requires:
     - UNIPILE_API_KEY and UNIPILE_DSN in .env (DSN is the account-specific
@@ -69,7 +70,8 @@ def send_dm(account_id: str, recipient: str, text: str) -> dict:
     """Start (or reuse) a chat with `recipient` and send `text`.
 
     `recipient` is the Unipile provider id returned by find_profile, or a
-    LinkedIn public identifier Unipile can resolve directly.
+    LinkedIn public identifier Unipile can resolve directly. Only works for
+    1st-degree connections; use `send_invite` for everyone else.
     """
     _require_config()
     headers = {**_headers(), "Content-Type": "application/json"}
@@ -79,6 +81,25 @@ def send_dm(account_id: str, recipient: str, text: str) -> dict:
         "text": text,
     }
     resp = requests.post(f"{DSN}/api/v1/chats", headers=headers, json=payload, timeout=30)
+    resp.raise_for_status()
+    return resp.json()
+
+
+def send_invite(account_id: str, provider_id: str, message: str | None = None) -> dict:
+    """Send a LinkedIn connection invitation to a non-1st-degree profile.
+
+    `provider_id` is the Unipile provider id returned by find_profile.
+    `message` is the connection note, max 300 characters (LinkedIn's limit).
+    """
+    _require_config()
+    if message and len(message) > 300:
+        print(f"Error: message is {len(message)} chars, max 300", file=sys.stderr)
+        sys.exit(1)
+    headers = {**_headers(), "Content-Type": "application/json"}
+    payload: dict = {"account_id": account_id, "provider_id": provider_id}
+    if message:
+        payload["message"] = message
+    resp = requests.post(f"{DSN}/api/v1/users/invite", headers=headers, json=payload, timeout=30)
     resp.raise_for_status()
     return resp.json()
 
@@ -93,10 +114,15 @@ def main() -> None:
     fp.add_argument("--account-id", required=True, help="Unipile account id (LinkedIn account)")
     fp.add_argument("--identifier", required=True, help="LinkedIn profile URL or public id")
 
-    sd = sub.add_parser("send-dm", help="Send a LinkedIn direct message")
+    sd = sub.add_parser("send-dm", help="Send a LinkedIn direct message (1st-degree only)")
     sd.add_argument("--account-id", required=True, help="Unipile account id (LinkedIn account)")
     sd.add_argument("--recipient", required=True, help="Recipient provider id or LinkedIn identifier")
     sd.add_argument("--text", required=True, help="Message body")
+
+    inv = sub.add_parser("invite", help="Send a LinkedIn connection invitation (non-1st-degree)")
+    inv.add_argument("--account-id", required=True, help="Unipile account id (LinkedIn account)")
+    inv.add_argument("--provider-id", required=True, help="Recipient's Unipile provider id (from find-profile)")
+    inv.add_argument("--message", default=None, help="Connection note, max 300 characters")
 
     args = parser.parse_args()
 
@@ -106,6 +132,8 @@ def main() -> None:
         print(json.dumps(find_profile(args.account_id, args.identifier), indent=2))
     elif args.command == "send-dm":
         print(json.dumps(send_dm(args.account_id, args.recipient, args.text), indent=2))
+    elif args.command == "invite":
+        print(json.dumps(send_invite(args.account_id, args.provider_id, args.message), indent=2))
     else:
         parser.print_help()
 

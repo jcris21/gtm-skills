@@ -123,6 +123,18 @@ Tell the user:
 
 Do not paste the full report into chat. The user will open the file.
 
+### Step 6: Log to Attio CRM
+
+Before this scan feeds `/signal-builder` or any outreach decision, log it in Attio so there's a CRM trail from research to send:
+
+1. **Ensure the Person + Company exist** — `search-records` (object `people`) by name or LinkedIn identifier. If missing, create the Company first (`upsert-record`, matching on `domains`) and then the Person (`create-record`, with `linkedin` and `company` linked to the Company record).
+2. **Attach the scan as a note** — `create-note` on the Person record:
+   - Title: `Prospect Posts Scan — [date]`
+   - Body: theme scanned, posts reviewed count, match count, and a 1-2 line summary per direct match (don't paste the full report — reference the markdown path from Step 4)
+3. **Gate:** do not authorize any outreach send that references this scan until the note is confirmed logged in Attio.
+
+Reference `context/crm/attio-schema.md` for the exact schema.
+
 ## Output locations
 
 - Report and JSON default to `prospects/_scans/` — gitignore this path in your project (scan output may contain commercial signals you don't want committed)
