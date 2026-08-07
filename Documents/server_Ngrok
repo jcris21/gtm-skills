@@ -1,0 +1,12 @@
+1. Start the FastAPI receiver:
+python -m uvicorn utils.webhook_test_server:app --port 8000
+
+2. In a separate terminal, start the ngrok tunnel bound to your reserved domain:
+ngrok http --url=nestlike-unpoignantly-orville.ngrok-free.dev 8000
+
+Notes:
+- Run them in that order — ngrok needs port 8000 already listening.
+- Keep both terminals open; closing either kills that piece (server or tunnel).
+- Captured payloads land in captured_payloads.jsonl at the project root — each line is one JSON event.
+- Health check once both are up: curl https://nestlike-unpoignantly-orville.ngrok-free.dev/health should return {"status":"ok"}.
+- The domain is reserved to your ngrok account, so it stays the same every time — no need to update the Unipile webhook URL.

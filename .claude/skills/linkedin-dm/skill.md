@@ -35,20 +35,27 @@ Same methodology as `email-writer` — Situation → Insight → Inquisition —
 ### Step 1: Analyze the signal
 Same as `email-writer` Step 1 — what's the prospect's Monday morning reality.
 
-### Step 2: Load offer context
-Read `context/offer.md`. Same as `email-writer` Step 2.
+### Step 2: Load offer and persona context
+Read `context/offer.md`. Same as `email-writer` Step 2. Also match the prospect's `role` against `context/icp.md`'s persona table exactly as `email-writer` Step 2 does — the matched persona's framing (not anything hardcoded here) drives the Insight line in Step 4. For Value-led messages, check `context/playbooks/segment-stories.md` for a real proof point the same way `email-writer` does — never fabricate one if the section is empty.
 
 ### Step 3: Determine connection state and select pattern
 Ask (or infer from prospect info provided): is the sending account already connected to this prospect on LinkedIn?
 - **Not connected** → draft a connection note (≤300 chars).
-- **Connected** → select Pain-led / Value-led / Segment fallback exactly as `email-writer` Step 3 does, using the same signal-score thresholds.
+- **Connected** → select Pain-led / Value-led / Segment fallback exactly as `email-writer` Step 3 does, using the same signal-score thresholds and the same persona-matched framing.
 
 ### Step 4: Draft Message 1
 - Connection note: one sentence, Situation + Inquisition, ≤300 characters, no Insight line (no room).
 - Direct message: Situation → Insight → Inquisition, 3 lines, under 50 words.
 
 ### Step 5: Draft follow-up touch
-One follow-up only (LinkedIn DM sequences run shorter than email — 2 touches, not 3): Day 3-4, rotate the angle same as `email-writer`'s Email 2 logic. No Email 3 equivalent — if two DMs don't land, the channel isn't the fix; revisit the signal.
+See `reference/sequence-framework.md` for the full sequencing rules (timing, angle rotation, breakup template, cross-channel spacing). Summary:
+- **Score 8-10:** up to 2 follow-ups (Day 3-4, Day 10-12) — still capped lower than email, since LinkedIn's per-channel volume tolerance is lower.
+- **Score 3-7 (default):** one follow-up only, Day 3-4, rotate the angle same as `email-writer`'s Email 2 logic.
+- **Score 1-2 (fallback only):** connection note / first DM only, no follow-up.
+
+**Before drafting any follow-up, run the trigger check from `reference/sequence-framework.md`** — confirm the window has elapsed, confirm no reply has arrived since the last touch, and confirm the tier cap isn't already hit. If a reply arrived, stop — do not draft the follow-up, hand off to `/reply-handler` instead (exception: `OUT_OF_OFFICE` pauses the sequence rather than cancelling it).
+
+No email-3-style third touch on any tier — if the tiered follow-ups don't land, the channel isn't the fix; revisit the signal.
 
 ### Step 6: Run quality self-check
 - [ ] First line describes THEIR situation, not your product
@@ -67,9 +74,10 @@ If any check fails, rewrite before presenting.
 **No connection note or DM may be sent via Unipile until this step completes.**
 
 1. Confirm the Person + Company records exist in Attio (created upstream by `/signal-builder`'s CRM step).
-2. `create-note` on the Person record: title `Campaign Drafted — [date]`, body = signal used, angle, connection note + follow-up DM text, channel (LinkedIn).
-3. Surface the note's Attio URL to the user alongside the drafted copy.
-4. Explicitly ask the user to authorize the send. Approving the copy is not the same as authorizing the send — ask directly: "¿Envío esto ahora?"
+2. Check the Person record's `combined_touch_count` (`context/crm/attio-schema.md`) against the score-tier cap from Step 5 — this counter is shared with `/email-writer`, so a prospect's email + DM touches both count against the same cap. Stop and flag instead of sending if this would exceed it.
+3. `create-note` on the Person record: title `Campaign Drafted — [date]`, body = signal used, angle, connection note + follow-up DM text, channel (LinkedIn).
+4. Surface the note's Attio URL to the user alongside the drafted copy.
+5. Explicitly ask the user to authorize the send. Approving the copy is not the same as authorizing the send — ask directly: "¿Envío esto ahora?"
 
 ## Output format
 
@@ -113,7 +121,7 @@ Once both are true, send it with `utils/unipile.py`:
 4. Check `network_distance` in the `find-profile` response:
    - `FIRST_DEGREE` → send a full DM: `python utils/unipile.py send-dm --account-id <id> --recipient <provider-id> --text "<message from Campaign Drafted note>"`.
    - anything else (`SECOND_DEGREE`, `THIRD_DEGREE`, `OUT_OF_NETWORK`) → send a connection invitation instead: `python utils/unipile.py invite --account-id <id> --provider-id <provider-id> --message "<connection note from Campaign Drafted note, max 300 chars>"`. `send-dm` will fail with `422 no_connection_with_recipient` on anyone who isn't 1st-degree.
-5. **After a successful send**, update Attio: add a `Campaign Sent — [date]` note (per `context/crm/attio-schema.md`'s "Campaign Sent Note" format) quoting the exact text that was sent, and move the `Outbound Pipeline` list entry to stage `Outreach Sent` via `update-list-entry-by-record-id`.
+5. **After a successful send**, update Attio: add a `Campaign Sent — [date]` note (per `context/crm/attio-schema.md`'s "Campaign Sent Note" format) quoting the exact text that was sent, move the `Outbound Pipeline` list entry to stage `Outreach Sent` via `update-list-entry-by-record-id`, and increment `combined_touch_count` by 1.
 
 ### Local environment note (Windows + AVG)
 

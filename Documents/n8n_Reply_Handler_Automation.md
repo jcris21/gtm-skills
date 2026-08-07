@@ -6,6 +6,8 @@ Replaces: manual `/reply-handler` invocation inside a Claude Code session
 Source skill ported: `.claude/skills/reply-handler/skill.md`
 Receptor URL: `https://n8n.odooconcept.com/webhook/01cca18f-fe2d-4138-aa23-6cccf8f54b32`
 
+**Changelog — 2026-08-06:** Node 10 corrected. It previously gated *every* non-escalated reply behind Slack approval, which contradicted `reply-handler/skill.md`'s own stated intent ("keeps 90% of interactions automated and only escalates when a human is genuinely needed"). Node 10 is now reached **only** when Node 6's escalation gate is `true` — non-escalated replies skip straight from Attio logging to Unipile send. See `Documents/HITL_Send_Approval_Design.md` for the full rationale and how this fits the outbound (Message 1 / follow-up) side too.
+
 ---
 
 ## 1. Why this exists
@@ -28,17 +30,46 @@ Configure in Unipile (dashboard or `POST /api/v1/webhooks`) to fire on new inbou
 - **Target URL:** `https://n8n.odooconcept.com/webhook/01cca18f-fe2d-4138-aa23-6cccf8f54b32`
 - **Filter:** only for the connected LinkedIn account(s) used for outbound (avoid personal inbox noise if the account is shared)
 
-> **Verify before building:** confirm the exact webhook payload shape from Unipile's current API docs (chat_id, sender provider_id, message text field name, account_id). Field names below are placeholders (`{{payload.X}}`) to be corrected against the real payload during build.
+> **Verified 2026-08-05** against a real inbound `message_received` webhook captured via `utils/webhook_test_server.py` + ngrok (raw payload in the gitignored `captured_payloads.jsonl`, not committed — contains real prospect data). The placeholder shape below has been corrected to match; **the two field names that were wrong are marked ⚠**.
 
-Expected payload (approx.):
+Real payload shape (field names verbatim, values redacted/genericized):
 ```json
 {
+  "event": "message_received",
   "account_id": "unipile-account-id",
+  "account_type": "LINKEDIN",
+  "webhook_name": "GTM reply",
   "chat_id": "chat-id",
-  "sender": { "provider_id": "...", "name": "Priscila Antunes", "public_identifier": "..." },
-  "message": { "text": "...", "timestamp": "..." }
+  "attendees": [
+    {
+      "attendee_id": "...",
+      "attendee_provider_id": "...",
+      "attendee_name": "Jane Doe",
+      "attendee_profile_url": "https://www.linkedin.com/in/<opaque-id>",
+      "attendee_specifics": { "provider": "LINKEDIN", "member_urn": "urn:li:member:...", "network_distance": "DISTANCE_1" },
+      "attendee_public_identifier": null
+    }
+  ],
+  "sender": {
+    "attendee_id": "...",
+    "attendee_provider_id": "...",
+    "attendee_name": "Jane Doe",
+    "attendee_profile_url": "https://www.linkedin.com/in/<opaque-id>",
+    "attendee_specifics": { "provider": "LINKEDIN", "member_urn": "urn:li:member:...", "network_distance": "DISTANCE_1" },
+    "attendee_public_identifier": null
+  },
+  "message": "Hi",
+  "message_id": "...",
+  "timestamp": "2026-08-06T01:18:08.351Z",
+  "is_sender": false,
+  "message_type": "MESSAGE"
 }
 ```
+
+**Corrections vs. the original placeholder:**
+- ⚠ `message` is a **plain string**, not `{ text, timestamp }` — there is no nested `message.text`. `timestamp` is a **top-level** field, not nested under `message`.
+- ⚠ Sender fields are nested under `attendee_*`, not bare — `sender.provider_id` → **`sender.attendee_provider_id`**, `sender.name` → **`sender.attendee_name`**, `sender.public_identifier` → **`sender.attendee_public_identifier`** (came back `null` in the real payload for a "classic" LinkedIn account — don't rely on it; use `attendee_profile_url` instead).
+- **New, useful field not in the original placeholder:** `is_sender` (boolean) — `true` when the message was sent *by* our own account, `false` when it's an inbound reply. This is a cleaner filter for Node 2 than comparing provider IDs (see below).
 
 ---
 
@@ -52,10 +83,10 @@ Expected payload (approx.):
 
 ### Node 2 — Filter: ignore outbound/self events
 - Type: `IF`
-- Condition: `sender.provider_id != our own account's provider_id` (guards against echoing our own sent messages back through the pipeline)
+- Condition: `is_sender == false` — the payload includes this boolean directly (`true` when the message was sent by our own account, `false` for an inbound reply), so use it instead of comparing provider IDs. Keep `sender.attendee_provider_id != our own account's provider_id` only as a fallback if `is_sender` is ever missing from a payload.
 
 ### Node 3 — Attio Lookup: find Person by LinkedIn identifier
-- Type: `HTTP Request` → Attio API (`POST /v2/objects/people/records/query`, filter on `linkedin_url` contains sender's public identifier)
+- Type: `HTTP Request` → Attio API (`POST /v2/objects/people/records/query`, filter on `linkedin_url` contains `sender.attendee_profile_url`'s opaque id — `attendee_public_identifier` is unreliable, it came back `null` on a real "classic" LinkedIn account)
 - Purpose: recover `record_id`, prospect name, and the most recent Note (original outbound email/DM + signal context) needed for classification context
 - Credential: Attio API key (n8n credential, separate from the Claude-side Attio MCP connector)
 - **On no match found:** branch to Node 3b (see §6 edge cases)
@@ -69,7 +100,7 @@ Expected payload (approx.):
 - Credential: `ANTHROPIC_API_KEY` (n8n credential — **new**, not currently in this repo's `.env`; provision separately for n8n)
 - Model: `claude-sonnet-5`
 - **System prompt:** the full content of `reply-handler/skill.md` Steps 1–2 (classification table + rules + per-category response templates), reproduced verbatim so behavior matches the manual skill exactly. See §7.
-- **User message:** reply text (Node 1), original outbound message + signal context (Node 4), prospect name/title/company (Node 3)
+- **User message:** reply text — the top-level `message` string field from Node 1's payload (not nested; `timestamp` is also top-level, not under `message`), original outbound message + signal context (Node 4), prospect name/title/company (Node 3)
 - **Structured output:** force JSON via a tool/schema so n8n can branch on it reliably:
   ```json
   {
@@ -90,7 +121,8 @@ Expected payload (approx.):
   - Question requires confidential pricing/custom scoping
   - Classification confidence < 80% (i.e. not "High")
   - OBJECTION mentions a named competitor
-- **If escalated:** skip the normal approval flow, send a **high-priority** Slack alert to a human AE directly (different message template — "needs your judgment, not just your approval") and stop the auto-pipeline (Node 9 still creates the Attio task, no auto-send at all).
+- **If escalated:** continues to Node 10 (Slack HITL) with the **high-priority** message template ("needs your judgment, not just your approval") — a human reviews/edits/rejects before any send. This is the *only* path that reaches Node 10.
+- **If not escalated:** skips Node 10 entirely and goes straight to Node 11 (auto-send) after Node 7/8/9 — no human approval, consistent with `reply-handler/skill.md`'s stated intent that ~90% of replies are fully automated. See `Documents/HITL_Send_Approval_Design.md` §2 for why this split exists.
 
 ### Node 7 — Attio: log the Reply Note (auto, always happens)
 - Type: `HTTP Request` → `POST /v2/objects/people/records/{record_id}/notes`
@@ -138,11 +170,13 @@ Expected payload (approx.):
   - NOT_NOW → "Re-engage {{name}} — said to reach back {{timeframe}}", deadline = specified date
   - OUT_OF_OFFICE → "Re-engage {{name}} — returns from OOO", deadline = return date + 1 day
 
-### Node 10 — Slack: HITL approval (the gate before anything is sent)
+### Node 10 — Slack: HITL approval (escalated cases only)
 - Type: `Slack` node using **Interactive Blocks** (Block Kit) posted to a review channel, e.g. `#gtm-reply-approvals`
-- Message content:
+- **Only reached when Node 6 escalates** (see Changelog above) — this is now a shared subworkflow with the outbound follow-up escalation path (`Documents/HITL_Send_Approval_Design.md` §5), not a universal gate. Non-escalated replies skip this node.
+- Message content (high-priority framing, since anything reaching here already needs real judgment, not a rubber-stamp):
   ```
-  New reply classified: *{{classification}}* ({{confidence}} confidence)
+  ⚠️ Needs your judgment — {{escalate_reason}}
+  Reply classified: *{{classification}}* ({{confidence}} confidence)
   Prospect: {{name}} — {{title}} @ {{company}}
 
   > {{reply_text}}
@@ -155,13 +189,13 @@ Expected payload (approx.):
 - **Approve & Send** → continues pipeline to Node 11 with the draft unmodified
 - **Edit** → opens a Slack modal (or a follow-up thread reply) where the human pastes an edited version; the edited text replaces `draft_response` before Node 11
 - **Reject** → stops the pipeline; no send; Node 7's note gets a follow-up PATCH marking "Response sent: (rejected, no send)"; Attio stage stays as set in Node 8 but a task is created for manual handling
-- n8n implementation: `Slack Trigger` (or the same workflow resuming via `Wait for Webhook`) listening for the button `action_id` callback, with a **wait node** timeout (e.g. 48h) after which it auto-escalates to Node 6's high-priority alert rather than silently expiring.
-- Skipped entirely for OUT_OF_OFFICE (no reply drafted — see §6.4).
+- n8n implementation: `Slack Trigger` (or the same workflow resuming via `Wait for Webhook`) listening for the button `action_id` callback, with a **wait node** timeout (e.g. 48h) after which it auto-escalates further (e.g. a second, more urgent alert) rather than silently expiring.
+- Skipped entirely for OUT_OF_OFFICE (no reply drafted — see §6.4) and for any non-escalated classification (auto-sends via Node 11 directly, see Node 6).
 
-### Node 11 — Unipile: send the approved reply
+### Node 11 — Unipile: send the reply
 - Type: `HTTP Request` → reuse `send_dm` logic from `utils/unipile.py` (`POST {{DSN}}/api/v1/chats` with `attendees_ids: [sender.provider_id]`, `text: {{approved_draft}}`)
 - Credential: `UNIPILE_API_KEY` / `UNIPILE_DSN` (n8n credential, same values as `.env`)
-- Only reached after Slack approval (Node 10) — **never auto-sends without a human click**, per your requirement.
+- Reached two ways: **(a)** directly after Node 9 for non-escalated classifications — auto-sends, no human click; **(b)** after Slack approval (Node 10) for escalated classifications — never auto-sends without a human click in that path. Which path a given reply takes is decided entirely by Node 6.
 
 ### Node 11b — Attio: patch the Reply Note with final sent text + approval outcome
 - Type: `HTTP Request` → `PATCH` the note created in Node 7 (or append a second note) recording:
@@ -199,21 +233,23 @@ Expected payload (approx.):
   Escalation gate (size / pricing / low-confidence / competitor)
    │Yes                                   │No
    ▼                                      ▼
- Slack: high-priority alert      Attio: log Reply Note (draft only, unsent)
- Attio: log note + task          Attio: update pipeline stage
- (stop — human takes over)       Attio: create task if needed
-                                          │
-                                          ▼
-                                 Slack: HITL approval (Approve/Edit/Reject)
-                                   │Approve/Edit        │Reject
-                                   ▼                     ▼
-                          Unipile: send DM        Attio: mark rejected, create manual task
-                                   │
-                                   ▼
-                          Attio: patch note with final sent text
-                                   │
-                                   ▼
-                          If INTERESTED → create Buyer Brief note + task
+ Attio: log Reply Note (draft, unsent)   Attio: log Reply Note (draft, unsent)
+ Attio: update pipeline stage            Attio: update pipeline stage
+ Attio: create task if needed            Attio: create task if needed
+   │                                      │
+   ▼                                      ▼
+ Slack: HITL approval (Approve/Edit/Reject,   Unipile: send DM — auto, no human click
+ high-priority framing)                        │
+   │Approve/Edit        │Reject                │
+   ▼                     ▼                      │
+ Unipile: send DM   Attio: mark rejected,        │
+   │                create manual task           │
+   └──────────────────────┬──────────────────────┘
+                           ▼
+                  Attio: patch note with final sent text
+                           │
+                           ▼
+                  If INTERESTED → create Buyer Brief note + task
 ```
 
 ---
@@ -247,9 +283,10 @@ Use the classification table (6 categories + examples), the classification rules
 
 ## 8. Open items before build
 
-- [ ] Confirm real Unipile webhook payload schema (field names in §2)
+- [x] Confirm real Unipile webhook payload schema (field names in §2) — verified 2026-08-05 against a live captured payload
 - [ ] Register the webhook with Unipile pointing at the n8n URL
 - [ ] Provision Anthropic API key, Attio API token, Slack app — none exist yet in this project's automation surface
-- [ ] Decide the Slack approval channel and who's in it
+- [ ] Decide the Slack approval channel and who's in it (now only used for escalated cases — lower volume than originally scoped)
 - [ ] Decide the escalation channel (same channel, different formatting, or a separate `#gtm-escalations`?)
 - [ ] Build + test with a low-risk category first (e.g. OUT_OF_OFFICE, no send involved) before enabling INTERESTED/OBJECTION auto-draft
+- [ ] Extract Node 10-11 into the shared subworkflow described in `Documents/HITL_Send_Approval_Design.md` §5, so the outbound follow-up escalation path can call the same logic instead of duplicating it

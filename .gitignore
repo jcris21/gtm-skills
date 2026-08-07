@@ -24,6 +24,8 @@ content/linkedin/
 prospects/
 data/scans/
 out/
+logs/
+captured_payloads.jsonl
 
 # Claude Code local state
 .claude/settings.local.json

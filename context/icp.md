@@ -57,6 +57,17 @@ F. Embedding Claude AI inside Odoo to automate workflows, reporting, and day-to-
 | ⭐⭐⭐      | Operations Manager  | Daily User & Implementation Champion          |
 | ⭐⭐⭐      | Commercial Director | Functional Stakeholder (CRM & Sales Projects) |
 
+## Contact Orchestration
+
+How many contacts to pursue per account, and which direction to work, keyed to the Company Size band above.
+
+| Company size sub-band | Contacts to pursue | Direction |
+| --- | --- | --- |
+| 15–40 employees | 1–2 contacts | Top-down — start with Founder/CEO or COO/VP Operations (highest-priority personas above); a second contact only if the first goes cold |
+| 40–100 employees | 2–3 contacts | Top-down — Founder/CEO or COO/VP Operations first, then layer in CFO or CIO/IT Director once the primary contact engages or stalls |
+
+Direction is top-down because the star-priority table above already ranks Founder/CEO and COO/VP Operations highest — smaller accounts have fewer decision layers, so a bottom-up entry (e.g. Operations Manager) adds a hop without adding leverage. `email-writer`/`linkedin-dm` should sequence personas from this table once persona-driven branching (their Step 2 persona match) is in play, rather than contacting every persona simultaneously.
+
 
 
 # Company-level

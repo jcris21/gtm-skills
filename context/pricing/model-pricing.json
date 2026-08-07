@@ -1,0 +1,40 @@
+{
+  "_comment": "USD per million tokens. Verified against https://platform.claude.com/docs/en/about-claude/pricing. Update this file when pricing changes or a new model enters the pipeline; token_report.py reads it at runtime — never hardcode a price in code.",
+  "_verified": true,
+  "_source": "https://platform.claude.com/docs/en/about-claude/pricing",
+  "_last_checked": "2026-08-05",
+  "_note": "cache_write_5m/1h = 5-minute/1-hour prompt cache write multipliers (1.25x/2x base input); cache_read = cache hit rate (0.1x base input, same regardless of write duration). token_ledger.py currently logs a single cache_creation_input_tokens figure without distinguishing 5m vs 1h — token_report.py defaults to the 5-minute rate (the common case) until the ledger captures duration.",
+  "models": {
+    "claude-sonnet-5": {
+      "_pricing_note": "Introductory pricing through 2026-08-31; reverts to $3/$15 input/output on 2026-09-01 — update this entry then.",
+      "_valid_through": "2026-08-31",
+      "input_per_million": 2.0,
+      "output_per_million": 10.0,
+      "cache_write_5m_per_million": 2.5,
+      "cache_write_1h_per_million": 4.0,
+      "cache_read_per_million": 0.2
+    },
+    "claude-sonnet-5-standard": {
+      "_pricing_note": "Standard rate effective 2026-09-01 onward. Rename this to claude-sonnet-5 (replacing the introductory entry above) once that date passes.",
+      "input_per_million": 3.0,
+      "output_per_million": 15.0,
+      "cache_write_5m_per_million": 3.75,
+      "cache_write_1h_per_million": 6.0,
+      "cache_read_per_million": 0.3
+    },
+    "claude-opus-5": {
+      "input_per_million": 5.0,
+      "output_per_million": 25.0,
+      "cache_write_5m_per_million": 6.25,
+      "cache_write_1h_per_million": 10.0,
+      "cache_read_per_million": 0.5
+    },
+    "claude-haiku-4-5-20251001": {
+      "input_per_million": 1.0,
+      "output_per_million": 5.0,
+      "cache_write_5m_per_million": 1.25,
+      "cache_write_1h_per_million": 2.0,
+      "cache_read_per_million": 0.1
+    }
+  }
+}

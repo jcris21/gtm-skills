@@ -60,12 +60,12 @@ Reference `reference/variable-archetypes.md`. The four archetypes are the defaul
 | Strategic-alternative | noun phrase | What they *should* be doing if the grind were removed | `high_value_task`: "strategic sourcing" |
 | Failure-mode | noun phrase | The specific thing that breaks and escalates | `inbox_risk`: "a mismatched PO" |
 
-For each line in the campaign angle (or draft copy), ask: does this map to one of the four archetypes? If yes, reuse the pattern. If no — flag it as a candidate for a **novel variable** and reason explicitly about where the value would come from.
+For each line in the campaign angle (or draft copy), ask: does this map to one of the four archetypes? If yes, reuse the pattern. If no — flag it as a candidate for a **novel variable** and reason explicitly about where the value would come from. A novel variable's justification must name a specific pain point from `context/icp.md`'s persona table (Top Challenges / Symptoms columns) — if it can't be tied to a row in that table, it's not a justification, it's forced personalization; reject it back to one of the four standard archetypes instead.
 
 ### Step 4: Spec each variable
 For every variable, produce:
 1. **Name** — snake_case, descriptive
-2. **Archetype** — one of the four, or "novel" with justification
+2. **Archetype** — one of the four, or "novel" with justification naming a specific `context/icp.md` persona pain point
 3. **Grammar form** — gerund / infinitive / noun phrase (must fit the target sentence)
 4. **Source** — where the raw value comes from
 5. **Extraction approach** — Claygent prompt / Clay formula / enrichment provider / manual mapping

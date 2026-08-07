@@ -2,6 +2,8 @@
 
 Catalog of signal categories to scan for during prospect analysis. Each signal type includes what to look for, what situation it implies, and how it maps to campaign approaches.
 
+This catalog is ICP-agnostic by design — it lists every generic signal category a B2B outbound system might use. Not every category applies to every ICP. Before scoring, load `context/icp.md`'s **Growth Signal**, **Company Size**, and **Industry** fields and use them to decide which categories below are in scope and how their strength thresholds should be read for the current ICP. Do not hardcode a specific ICP's numbers or assumptions into this file — if `context/icp.md` changes, this file's guidance should still apply without editing it.
+
 ---
 
 ## 1. Tech Stack Signals
@@ -27,7 +29,7 @@ Catalog of signal categories to scan for during prospect analysis. Each signal t
 ### No tooling / manual processes
 **What to look for:** No evidence of any tool in the category. Job posts mention manual processes. Website describes workflows that should be automated but aren't.
 **What it implies:** Either the pain isn't acute enough yet, or the team doesn't know solutions exist, or they're too resource-constrained to implement one.
-**Signal strength:** 4-6 (depends on company stage — a Series B with no tooling = higher intent than a pre-seed)
+**Signal strength:** 4-6 (depends on where the company sits within `context/icp.md`'s Company Size band — a company near the top of the range with no tooling = higher intent than one near the bottom)
 **Best approach:** Value-led — "I mapped out how [similar company] automated [process]. Thought it might be relevant since you seem to be handling this manually."
 
 ---
@@ -54,13 +56,16 @@ Catalog of signal categories to scan for during prospect analysis. Each signal t
 
 ---
 
-## 3. Funding / Growth Signals
+## 3. Growth Signals
+
+Which of these sub-types are relevant depends entirely on `context/icp.md`'s Growth Signal field — read it before applying any of these. For an ICP defined around headcount growth or expansion (not outside financing events), skip "Recent fundraise" and weight "Expansion signals" and hiring-driven growth instead.
 
 ### Recent fundraise
-**What to look for:** Seed, Series A/B/C announced in the last 6 months. Sources: Crunchbase, press releases, LinkedIn announcements.
-**What it implies:** Fresh capital + pressure to hit milestones = willingness to buy tools that accelerate growth. Especially relevant if the funding announcement mentions the area your product serves.
+**What to look for:** Applicable only if `context/icp.md`'s Growth Signal field names financing events (e.g., funding rounds, PE/VC investment) as relevant to this ICP. Sources: Crunchbase, press releases, LinkedIn announcements.
+**What it implies:** Fresh capital + pressure to hit milestones = willingness to buy tools that accelerate growth. Especially relevant if the announcement mentions the area your product serves.
 **Signal strength:** 6-8 (higher if the use-of-funds aligns with your offer's area)
 **Best approach:** Pain-led — reference the growth challenge that comes with scaling.
+**Skip this sub-type entirely** if `context/icp.md` describes an ICP of traditionally financed operating companies rather than externally funded ones — do not score or reference a financing event that doesn't fit the ICP's actual profile.
 
 ### Expansion signals
 **What to look for:** Opening new offices, entering new markets, launching new products. Sources: press releases, LinkedIn, job posts in new locations.
@@ -141,7 +146,7 @@ The most powerful targeting comes from combining signals:
 | Combination | Strength | Example |
 |---|---|---|
 | Hiring + Competitor usage | 9-10 | Hiring a role AND using a competitor with bad reviews |
-| Funding + No tooling | 8-9 | Fresh raise + no solution in place = budget + urgency |
+| Growth signal + No tooling | 8-9 | Fresh growth event (per `context/icp.md`'s Growth Signal field — funding, expansion, or headcount) + no solution in place = budget + urgency |
 | Hiring + Blog content | 7-9 | Hiring for the role + writing about the problem = active evaluation |
 | Competitor + Negative reviews | 8-10 | Using competitor + their own customers complaining = switching intent |
 | Growth + Manual processes | 7-8 | Expanding + still doing things manually = breaking point |

@@ -88,15 +88,17 @@ Group results by company. For each company, highlight:
 
 If the user is running this for prospect research or signal scoring, provide a signal summary:
 
-| Company | GTM Roles | Tech Roles | Leadership Hires | Signal Strength | Interpretation |
+| Company | GTM Roles | Tech Roles | Leadership Hires | Signal Score | Interpretation |
 |---------|-----------|------------|-------------------|----------------|----------------|
-| ... | ... | ... | ... | High/Med/Low | ... |
+| ... | ... | ... | ... | 0-10 | ... |
 
-**Signal strength heuristics:**
-- **High (8-10)**: 3+ GTM roles posted in last 30 days, OR VP/Head-level GTM hire, OR combined GTM + leadership
-- **Medium (5-7)**: 1-2 GTM roles, or technical roles that suggest product-market fit push
-- **Low (1-4)**: Only backfill roles, or only engineering with no GTM motion
-- **None (0)**: No relevant roles found
+**Signal strength heuristics — scored 0-10 directly on `signal-builder`'s scale (`.claude/skills/signal-builder/skill.md`'s Step 4 rubric), so both skills write the same number into `signal_score` without a separate conversion step:**
+- **8-10**: 3+ relevant roles (per `context/icp.md`'s persona/role list, e.g. GTM roles for a GTM-motion ICP, ops/systems roles for an operations ICP) posted in last 30 days, OR a VP/Head-level hire in a role that matches the ICP's persona table, OR combined relevant roles + leadership hire
+- **5-7**: 1-2 relevant roles, or roles in an adjacent function that suggest the underlying pain exists without being a direct persona match
+- **1-4**: Only backfill roles, or only roles unrelated to any persona in `context/icp.md`
+- **0**: No relevant roles found
+
+Which roles count as "relevant" is not fixed here — always cross-reference the postings against `context/icp.md`'s persona table (the roles most likely to be hiring for or requesting the pain your offer solves) rather than assuming a GTM-specific role list applies to every ICP.
 
 ## Batch mode
 

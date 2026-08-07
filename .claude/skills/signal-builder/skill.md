@@ -13,13 +13,27 @@ If the user doesn't specify what they sell, check `context/offer.md` for stored 
 
 ## Process
 
-### Step 1: Load offer context
+### Step 0: ICP hard-gate — qualify before scanning
+
+Before doing anything else, check the lead against `context/icp.md`'s **Company-level** and **Person-level** hard criteria (company size, industry, geography, and that the contact holds one of the listed buyer roles). These are the factual/firmographic lines, not the qualitative "soft" ones (e.g. "not highly bureaucratic," "values speed over status quo") — soft criteria inform tone later, they don't disqualify.
+
+- **If the lead fails any hard criterion:** stop here. Do not call WebFetch, do not create or touch any Attio record, do not produce a signal scan. Output only:
+  ```
+  Disqualified — [specific criterion failed, e.g. "Company size 8 employees, below ICP's 15–100 band"]
+  ```
+- **If the lead passes all hard criteria:** proceed to Step 1 as normal.
+
+This is a hard gate, not a scoring input — a lead either qualifies or it doesn't. It exists to avoid spending a full site scan (and CRM writes) on a lead that never should have entered the pipeline.
+
+### Step 1: Load offer and ICP context
 
 Check `context/offer.md` for offer context. If found, load:
 - ICP definition (who you're targeting)
 - Key pain points your offer solves
 - Current targeting signals in use
 - Tech stack and competitive landscape
+
+Also load `context/icp.md`'s **Growth Signal**, **Company Size**, and **Industry** fields. These determine which signal categories in `reference/signal-types.md` are actually in scope for this ICP (e.g., whether financing-event signals apply, and where a given company size falls within the ICP's band) — never assume a signal category applies or doesn't; always check the current ICP file, since it can change.
 
 This context determines WHICH signals matter most. A hiring signal is noise unless your offer solves a problem that hiring indicates.
 
@@ -54,7 +68,7 @@ Rank signals from most exclusive/highest intent to broadest. The ranking criteri
 - Using a direct competitor with visible friction (negative reviews, switching signals)
 - Active job post for a role your product replaces or augments
 - Public complaint or operational gap that maps directly to your value prop
-- Recent event (funding, acquisition, expansion) that creates immediate need
+- Recent growth event that creates immediate need — read `context/icp.md`'s Growth Signal field to know which event types count for this ICP (e.g., headcount growth, expansion, or a financing event, whichever the current ICP actually names)
 
 **Score 5-7 (Strong signal)**
 - Using adjacent/related tools that indicate the problem space but not direct competitor usage
