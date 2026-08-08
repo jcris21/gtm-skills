@@ -1,6 +1,7 @@
 # Environment
 .env
 .env.local
+credentials/
 
 # Python
 __pycache__/

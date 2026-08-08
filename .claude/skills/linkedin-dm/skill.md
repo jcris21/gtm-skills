@@ -73,11 +73,19 @@ If any check fails, rewrite before presenting.
 
 **No connection note or DM may be sent via Unipile until this step completes.**
 
+**Message 1 (connection note or first DM) always routes through the Google Sheets queue — never asked in chat, per `Documents/HITL_Send_Approval_Design.md` §2/§3. Follow-ups (Step 5) are not gated here; they auto-send per the same design doc, subject only to the reply/trigger checks already in Step 5.**
+
 1. Confirm the Person + Company records exist in Attio (created upstream by `/signal-builder`'s CRM step).
 2. Check the Person record's `combined_touch_count` (`context/crm/attio-schema.md`) against the score-tier cap from Step 5 — this counter is shared with `/email-writer`, so a prospect's email + DM touches both count against the same cap. Stop and flag instead of sending if this would exceed it.
 3. `create-note` on the Person record: title `Campaign Drafted — [date]`, body = signal used, angle, connection note + follow-up DM text, channel (LinkedIn).
-4. Surface the note's Attio URL to the user alongside the drafted copy.
-5. Explicitly ask the user to authorize the send. Approving the copy is not the same as authorizing the send — ask directly: "¿Envío esto ahora?"
+4. Queue Message 1 for human review — do not ask in chat. Send the same lead metadata the `Outbound_Pipeline_Tracker.md` row would carry, so an email-writer run for the same lead converges on one Sheet row instead of a second one (`canal_envio` becomes `Both` automatically):
+   ```
+   python utils/sheet_queue.py upsert-draft --lead-id <attio-person-id> --canal linkedin \
+     --draft "<connection note or DM text>" \
+     --metadata-json '{"prospecto": "<name>", "empresa": "<company>", "score": <0-10>, "signal_type": "<Outbound_Pipeline_Tracker.md label>", "situacion": "<1 line>", "email_disponible": "Y/N", "linkedin_disponible": "Y", "variable_personalizacion": "<var used>", "patron": "Pain-led/Value-led/Segment-fallback/Connection-note", "persona_matcheada": "<from context/icp.md>", "historia_prueba": "<from context/playbooks/segment-stories.md or —>", "angulo": "<1 line>", "qa_pass": "Y/N"}' \
+     --timestamp-draft <ISO now>
+   ```
+5. Tell the user the draft was queued (Sheet row + Attio note URL) — do not ask "¿Envío esto ahora?" here. The human approves/edits in the Sheet; n8n's manual-button flow (design doc §3.3) sends it and marks Attio afterward. This skill's job ends at queuing.
 
 ## Output format
 
@@ -109,9 +117,11 @@ Word count: [X]
 
 ## Sending via Unipile
 
+**This section applies to follow-ups only (Step 5).** Message 1 is never sent from this skill — it's queued to the Google Sheet in Step 7 and sent by n8n's manual-button flow after human approval (`Documents/HITL_Send_Approval_Design.md` §3.3), so this skill never calls `send-dm`/`invite` for a first touch.
+
 **Gate — do not run any of these commands until:**
-- A `Campaign Drafted — [date]` note exists on the Person record in Attio (Step 7 above).
-- The user has explicitly authorized the send (approving copy ≠ authorizing send).
+- A `Campaign Drafted — [date]` note exists on the Person record in Attio (Step 7 above), covering the follow-up.
+- The follow-up's Step 5 trigger check passed (window elapsed, no reply since last touch, tier cap not hit) — follow-ups auto-send once that check passes, no additional chat authorization needed per the design doc's §2 principle table.
 
 Once both are true, send it with `utils/unipile.py`:
 

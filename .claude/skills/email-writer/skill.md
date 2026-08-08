@@ -128,11 +128,20 @@ If any check fails, rewrite the email before presenting it.
 
 **No email may be sent, and no handoff to `/attio-crm`'s send step or `/linkedin-dm`'s Unipile send may proceed, until this step completes.**
 
+**Email 1 always routes through the Google Sheets queue — never asked in chat, per `Documents/HITL_Send_Approval_Design.md` §2/§3. Email 2/3 follow-ups are not gated here; they auto-send per the same design doc, subject only to whatever trigger/reply checks the sending mechanism already applies.**
+
 1. Confirm the Person + Company records exist in Attio (created upstream by `/signal-builder`'s CRM step).
 2. Check the Person record's `combined_touch_count` (`context/crm/attio-schema.md`) against the score-tier cap from Step 5 — if this send would exceed the cap for the prospect's signal score, stop and flag it instead of sending; this counter is shared with `/linkedin-dm`, so a prospect's email + DM touches both count against the same cap.
 3. `create-note` on the Person record: title `Campaign Drafted — [date]` (not "Campaign Sent" — that title is reserved for after actual send confirmation), body = signal used, angle, all draft subject lines/message text, channel.
-4. Surface the note's Attio URL to the user alongside the drafted copy.
-5. Explicitly ask the user to authorize the send. Do not send automatically — this skill produces copy and logs it; sending is a separate, human-gated action (see `/linkedin-dm`'s "Sending via Unipile" section or `/attio-crm`'s Campaign Sent note for what happens after authorization).
+4. For Email 1 only: queue it for human review instead of asking in chat. Send the same lead metadata the `Outbound_Pipeline_Tracker.md` row would carry, so a linkedin-dm run for the same lead converges on one Sheet row instead of a second one (`canal_envio` becomes `Both` automatically):
+   ```
+   python utils/sheet_queue.py upsert-draft --lead-id <attio-person-id> --canal email \
+     --draft "<subject + body>" \
+     --metadata-json '{"prospecto": "<name>", "empresa": "<company>", "score": <0-10>, "signal_type": "<Outbound_Pipeline_Tracker.md label>", "situacion": "<1 line>", "email_disponible": "Y", "linkedin_disponible": "Y/N", "variable_personalizacion": "<var used>", "patron": "Pain-led/Value-led/Segment-fallback", "persona_matcheada": "<from context/icp.md>", "historia_prueba": "<from context/playbooks/segment-stories.md or —>", "angulo": "<1 line>", "qa_pass": "Y/N"}' \
+     --timestamp-draft <ISO now>
+   ```
+   Tell the user the draft was queued (Sheet row + Attio note URL). Do not ask "¿Envío esto ahora?" — the human approves/edits in the Sheet; n8n's manual-button flow (design doc §3.3) sends it and marks Attio afterward.
+5. For Email 2/3 follow-ups: no Sheet queue, no chat authorization — they auto-send per the design doc's §2 principle table (already past the Message-1 gate once; no new risk signal to gate on).
 
 ## Output format
 
