@@ -4,12 +4,30 @@ Catalog of signal categories to scan for during prospect analysis. Each signal t
 
 This catalog is ICP-agnostic by design — it lists every generic signal category a B2B outbound system might use. Not every category applies to every ICP. Before scoring, load `context/icp.md`'s **Growth Signal**, **Company Size**, and **Industry** fields and use them to decide which categories below are in scope and how their strength thresholds should be read for the current ICP. Do not hardcode a specific ICP's numbers or assumptions into this file — if `context/icp.md` changes, this file's guidance should still apply without editing it.
 
+## Signal Sources
+
+Every signal in the output must carry a **source tag** indicating where it was found:
+
+| Source | Meaning | Confidence |
+|--------|---------|------------|
+| `tavily` | Found via Tavily internet search (external content: press releases, news, interviews, sector articles) | Standard — verify with website or enrichment data when possible |
+| `website` | Found via WebFetch scan of the prospect's own website (first-party content: careers page, blog, about page) | Standard — direct from the company |
+| `both` | Confirmed by both Tavily AND website scan (e.g., hiring signal appears in both news and careers page) | Highest — multi-source confirmation boosts confidence by +1 in scoring |
+
+**When to attribute `tavily`:** Signals found only in external content — press releases, news articles, CEO interviews, sector analysis, competitor reviews, social media mentions.
+
+**When to attribute `website`:** Signals found only on the prospect's own domain — job postings, blog posts, about page details, product/pricing info, integration pages.
+
+**When to attribute `both`:** The same factual signal appears from both an external source (Tavily) and the company's own website. This is the strongest provenance — it means the signal is both publicly visible and internally confirmed.
+
+Source tags flow into the Sheet's `fuente_senal` transparency column via the email-writer/linkedin-dm handoff.
+
 ---
 
 ## 1. Tech Stack Signals
 
 ### Direct competitor usage
-**What to look for:** Prospect uses a product that directly competes with your offering. Sources: BuiltWith, website footer, integrations page, G2/Capterra reviews, job posts mentioning specific tools.
+**What to look for:** Prospect uses a product that directly competes with your offering. Sources: BuiltWith, website footer, integrations page, G2/Capterra reviews, job posts mentioning specific tools, Tavily search for `"[Company]" vs [competitor]` or competitor comparison articles.
 **What it implies:** They've already bought into the problem space. They know the pain exists. The question is whether their current tool is solving it well enough.
 **Sub-signals:**
 - Negative reviews of the competitor (switching intent)
@@ -61,7 +79,7 @@ This catalog is ICP-agnostic by design — it lists every generic signal categor
 Which of these sub-types are relevant depends entirely on `context/icp.md`'s Growth Signal field — read it before applying any of these. For an ICP defined around headcount growth or expansion (not outside financing events), skip "Recent fundraise" and weight "Expansion signals" and hiring-driven growth instead.
 
 ### Recent fundraise
-**What to look for:** Applicable only if `context/icp.md`'s Growth Signal field names financing events (e.g., funding rounds, PE/VC investment) as relevant to this ICP. Sources: Crunchbase, press releases, LinkedIn announcements.
+**What to look for:** Applicable only if `context/icp.md`'s Growth Signal field names financing events (e.g., funding rounds, PE/VC investment) as relevant to this ICP. Sources: Crunchbase, press releases, LinkedIn announcements, Tavily search for `"[Company]" funding raised series round`.
 **What it implies:** Fresh capital + pressure to hit milestones = willingness to buy tools that accelerate growth. Especially relevant if the announcement mentions the area your product serves.
 **Signal strength:** 6-8 (higher if the use-of-funds aligns with your offer's area)
 **Best approach:** Pain-led — reference the growth challenge that comes with scaling.
@@ -100,13 +118,13 @@ Which of these sub-types are relevant depends entirely on `context/icp.md`'s Gro
 ## 5. Content / Awareness Signals
 
 ### Blog posts about the problem
-**What to look for:** Prospect's blog discusses challenges in the area your product serves. They're writing about the pain, researching solutions, or sharing their approach.
+**What to look for:** Prospect's blog discusses challenges in the area your product serves. They're writing about the pain, researching solutions, or sharing their approach. Also check Tavily for CEO-authored articles or LinkedIn posts syndicated to other sites.
 **What it implies:** They're problem-aware. They know the challenge exists. They may be evaluating solutions or building internally.
-**Signal strength:** 6-8 (higher if the content is recent and indicates active evaluation)
+**Signal strength:** 6-8 (higher if the content is recent and indicates active evaluation). Source `tavily` when the content is on a third-party site (syndicated article, guest post, interview transcript); source `website` when it's on the company blog.
 **Best approach:** Value-led — reference their content and add a specific insight they didn't cover.
 
 ### Conference attendance / speaking
-**What to look for:** Team members attending or speaking at conferences related to your space. Sources: event websites, LinkedIn posts, Apify scrapers.
+**What to look for:** Team members attending or speaking at conferences related to your space. Sources: event websites, LinkedIn posts, Apify scrapers, Tavily search for `"[Founder/CEO Name]" interview podcast [conference name]`.
 **What it implies:** They're investing time in the problem space. Conference attendees are often evaluating vendors or looking for best practices.
 **Signal strength:** 5-7
 **Best approach:** Pain-led — reference the conference and the specific topic as a hook.

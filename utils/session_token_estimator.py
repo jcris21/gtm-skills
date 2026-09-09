@@ -34,6 +34,10 @@ from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 PRICING_PATH = PROJECT_ROOT / "context" / "pricing" / "model-pricing.json"
+TRACKER_PATH = PROJECT_ROOT / "Documents" / "Outbound_Pipeline_Tracker.md"
+DEFAULT_REPORT_PATH = PROJECT_ROOT / "Documents" / "Decisions" / "TokenEstimates.md"
+TRACKER_TABLE_HEADER = "| Prospecto |"
+SYNTHETIC_PROSPECT_MARKERS = ("Jane Doe", "*(fila por prospecto")
 
 # Claude Code stores transcripts under a directory named after the project
 # path with path separators replaced by dashes.
@@ -177,6 +181,65 @@ def estimate_for_lead(lead_name: str, session_paths: list) -> LeadEstimate:
     return estimate
 
 
+def parse_pipeline_prospects(tracker_path: Path = TRACKER_PATH) -> list:
+    """
+    Extract prospect names from the "Tabla maestra" in Outbound_Pipeline_Tracker.md,
+    excluding rows that are documentation examples rather than real pipeline runs
+    (the synthetic "Jane Doe" example row and the empty template placeholder row).
+    """
+    prospects = []
+    in_table = False
+    with tracker_path.open("r", encoding="utf-8") as f:
+        for line in f:
+            line = line.rstrip("\n")
+            if line.startswith(TRACKER_TABLE_HEADER):
+                in_table = True
+                continue
+            if not in_table:
+                continue
+            if not line.startswith("|"):
+                break
+            cells = [c.strip() for c in line.split("|")]
+            if len(cells) < 2:
+                continue
+            name = cells[1]
+            if not name or set(name) <= {"-"}:
+                continue
+            if any(marker in name for marker in SYNTHETIC_PROSPECT_MARKERS):
+                continue
+            prospects.append(name)
+    return prospects
+
+
+def build_multi_prospect_report(prospect_names: list, session_paths: list) -> list:
+    return [build_report(name, session_paths) for name in prospect_names]
+
+
+def write_markdown_report(reports: list, output_path: Path = DEFAULT_REPORT_PATH) -> None:
+    lines = [
+        "# Token Estimates — Pipeline Prospects",
+        "",
+        (
+            "Estimacion por proximidad de mencion en las transcripciones locales de "
+            "Claude Code (ver `session_token_estimator.py`). Incluye solo prospectos "
+            "que pasaron por una ejecucion real del pipeline (excluye filas de ejemplo "
+            "sintetico y plantilla vacia de `Outbound_Pipeline_Tracker.md`). No es un "
+            "ledger exacto — ver nota al pie de cada script/decision relacionada."
+        ),
+        "",
+        "| Prospecto | Mentions | Input Tokens | Output Tokens | Cache Write 1h | Cache Write 5m | Cache Read | Costo Estimado (USD) |",
+        "|---|---|---|---|---|---|---|---|",
+    ]
+    for report in reports:
+        lines.append(
+            "| {lead_name} | {mention_count} | {input_tokens:,} | {output_tokens:,} "
+            "| {cache_write_1h:,} | {cache_write_5m:,} | {cache_read_input_tokens:,} "
+            "| ${estimated_cost_usd:.4f} |".format(**report)
+        )
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    output_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+
 def load_pricing(pricing_path: Path = PRICING_PATH) -> dict:
     if not pricing_path.exists():
         print(f"Error: pricing file not found at {pricing_path}", file=sys.stderr)
@@ -229,13 +292,29 @@ def main() -> None:
     parser = argparse.ArgumentParser(
         description="Estimate per-lead token usage/cost from local Claude Code session transcripts."
     )
-    parser.add_argument("--lead-name", required=True, help='e.g. "Christian Cobian"')
+    group = parser.add_mutually_exclusive_group(required=True)
+    group.add_argument("--lead-name", help='e.g. "Christian Cobian"')
+    group.add_argument(
+        "--all-pipeline-prospects",
+        action="store_true",
+        help=(
+            "Estimate every prospect that went through a real pipeline run, read from "
+            f"{TRACKER_PATH.relative_to(PROJECT_ROOT)} (excludes synthetic/template rows), "
+            f"and write a markdown report to --output (default {DEFAULT_REPORT_PATH.relative_to(PROJECT_ROOT)})."
+        ),
+    )
     parser.add_argument(
         "--session",
         action="append",
         help="Path to a specific session .jsonl file. Repeatable. Defaults to all sessions in this project's transcript dir.",
     )
     parser.add_argument("--format", choices=["table", "json"], default="table")
+    parser.add_argument(
+        "--output",
+        type=Path,
+        default=DEFAULT_REPORT_PATH,
+        help="Only used with --all-pipeline-prospects: path to write the markdown report.",
+    )
     args = parser.parse_args()
 
     if args.session:
@@ -247,6 +326,18 @@ def main() -> None:
     if not session_paths:
         print("No session transcripts found to scan.", file=sys.stderr)
         sys.exit(1)
+
+    if args.all_pipeline_prospects:
+        prospects = parse_pipeline_prospects()
+        if not prospects:
+            print(f"No pipeline prospects found in {TRACKER_PATH}.", file=sys.stderr)
+            sys.exit(1)
+        reports = build_multi_prospect_report(prospects, session_paths)
+        write_markdown_report(reports, args.output)
+        print(f"Wrote token estimates for {len(reports)} prospect(s) to {args.output}")
+        if args.format == "json":
+            print(json.dumps(reports, indent=2))
+        return
 
     report = build_report(args.lead_name, session_paths)
 

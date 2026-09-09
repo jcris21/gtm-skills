@@ -41,7 +41,20 @@ Fase 1-3 vocabulary/labels exactly — see its "Leyenda de labels" section):
     email_disponible | linkedin_disponible | linkedin_url | variable_personalizacion |
     canal_envio | patron | persona_matcheada | historia_prueba | angulo | qa_pass |
     draft_email | editado_email | draft_linkedin | editado_linkedin |
-    aprobado | enviado | timestamp_draft
+    aprobado | enviado | timestamp_draft |
+    senal_detectada | key_data_points | fuente_variable | qa_rationale
+
+The last four columns (`senal_detectada`, `key_data_points`, `fuente_variable`,
+`qa_rationale`) exist purely for transparency — they carry the short,
+factual "why" behind the consolidated Score/signal_type/variable_personalizacion/
+qa_pass columns earlier in the row (Outbound_Pipeline_Tracker.md's "Notas de
+uso"). Same 1-line/label rule as every other column here — no paragraphs,
+the full reasoning still lives in the skill's own output and the Attio note.
+They're appended at the END, not interspersed, on purpose: the live Sheet's
+header row predates them, and gspread's `get_all_records()`/positional writes
+mean any column inserted before an existing one shifts every value after it
+out of alignment with the header the next time a row is written. Never
+reorder existing entries in COLUMNS for that reason — only append.
 
 `linkedin_url` resolves n8n_Message1_Send_Flow.md §6 edge case 1's LinkedIn
 half (a send target the n8n send flow can hit directly, no Attio lookup
@@ -76,9 +89,17 @@ METADATA_COLUMNS = [
     "email_disponible", "linkedin_disponible", "linkedin_url", "variable_personalizacion",
     "canal_envio", "patron", "persona_matcheada", "historia_prueba", "angulo", "qa_pass",
 ]
+# Transparency columns (Notas de uso / signal-builder handoff) — appended at the END of
+# the live Sheet's header row, not interspersed with METADATA_COLUMNS above. Keep them
+# here, never merge into METADATA_COLUMNS' positional order: the header row predates
+# them, and positional writes (see upsert_draft/batch_insert_leads) shift every value
+# after the first reordered column out of alignment with the real header the moment
+# COLUMNS' order stops matching the Sheet.
+TRANSPARENCY_COLUMNS = ["senal_detectada", "key_data_points", "fuente_variable", "fuente_senal", "qa_rationale"]
 DRAFT_COLUMNS = ["draft_email", "editado_email", "draft_linkedin", "editado_linkedin"]
 APPROVAL_COLUMNS = ["aprobado", "enviado", "timestamp_draft"]
-COLUMNS = ["lead_id"] + METADATA_COLUMNS + DRAFT_COLUMNS + APPROVAL_COLUMNS
+COLUMNS = ["lead_id"] + METADATA_COLUMNS + DRAFT_COLUMNS + APPROVAL_COLUMNS + TRANSPARENCY_COLUMNS
+WRITABLE_METADATA_KEYS = METADATA_COLUMNS + TRANSPARENCY_COLUMNS
 
 
 def _require_config() -> None:
@@ -108,6 +129,15 @@ def _worksheet():
         return ws
 
 
+def _col_letter(n: int) -> str:
+    """1-indexed column number -> spreadsheet column letter(s) (1='A', 26='Z', 27='AA', ...)."""
+    letters = ""
+    while n > 0:
+        n, remainder = divmod(n - 1, 26)
+        letters = chr(65 + remainder) + letters
+    return letters
+
+
 def _canal_envio(draft_email: str, draft_linkedin: str) -> str:
     """Canal(es) label per Outbound_Pipeline_Tracker.md's fixed vocabulary."""
     has_email = bool(draft_email.strip())
@@ -122,8 +152,14 @@ def _canal_envio(draft_email: str, draft_linkedin: str) -> str:
 
 
 def _find_row_by_lead_id(ws, lead_id: str) -> tuple[int, dict] | None:
-    """Return (1-indexed row number, record dict) for an existing lead_id, or None."""
-    records = ws.get_all_records()
+    """Return (1-indexed row number, record dict) for an existing lead_id, or None.
+
+    Uses expected_headers=COLUMNS instead of relying on the sheet's own header
+    row: the live Sheet has trailing blank columns beyond COLUMNS' width, and
+    gspread's get_all_records() raises on duplicate '' headers when it reads
+    those in via the default full-width scan.
+    """
+    records = ws.get_all_records(expected_headers=COLUMNS)
     for i, record in enumerate(records, start=2):
         if str(record.get("lead_id", "")) == lead_id:
             return i, record
@@ -161,7 +197,7 @@ def upsert_draft(
         row_data = {col: str(row_data.get(col, "")) for col in COLUMNS}
 
     for key, value in metadata.items():
-        if key in METADATA_COLUMNS and key != "canal_envio":
+        if key in WRITABLE_METADATA_KEYS and key != "canal_envio":
             row_data[key] = str(value)
 
     draft_col = "draft_email" if canal == "email" else "draft_linkedin"
@@ -172,11 +208,16 @@ def upsert_draft(
     values = [row_data[col] for col in COLUMNS]
 
     if existing is None:
-        ws.append_row(values, value_input_option="RAW")
+        # Explicit range, not append_row: the live Sheet has stray cells past
+        # COLUMNS' width (see _find_row_by_lead_id) that can throw off
+        # append_row's automatic table-range detection and land the new row
+        # at the wrong starting column.
+        next_row = len(ws.get_all_values()) + 1
+        ws.update(f"A{next_row}:{_col_letter(len(COLUMNS))}{next_row}", [values])
         return {"upserted": "inserted", "row": row_data}
     else:
         row_number, _ = existing
-        ws.update(f"A{row_number}:{chr(ord('A') + len(COLUMNS) - 1)}{row_number}", [values])
+        ws.update(f"A{row_number}:{_col_letter(len(COLUMNS))}{row_number}", [values])
         return {"upserted": "updated", "row_number": row_number, "row": row_data}
 
 
@@ -199,14 +240,17 @@ def batch_insert_leads(leads: list[dict]) -> dict:
         if not row_data.get("canal_envio"):
             row_data["canal_envio"] = _canal_envio(row_data["draft_email"], row_data["draft_linkedin"])
         rows.append([row_data[col] for col in COLUMNS])
-    ws.append_rows(rows, value_input_option="RAW")
+    # Explicit range, not append_rows — see upsert_draft's inserted branch.
+    start_row = len(ws.get_all_values()) + 1
+    end_row = start_row + len(rows) - 1
+    ws.update(f"A{start_row}:{_col_letter(len(COLUMNS))}{end_row}", rows)
     return {"inserted": len(rows)}
 
 
 def list_approved_unsent() -> list[dict]:
     """Rows where aprobado=Si and enviado=No — what n8n's manual-button flow sends next."""
     ws = _worksheet()
-    records = ws.get_all_records()
+    records = ws.get_all_records(expected_headers=COLUMNS)
     return [
         r for r in records
         if str(r.get("aprobado", "")).strip().lower() == "si"
@@ -230,7 +274,7 @@ def main() -> None:
     ud.add_argument("--lead-id", required=True)
     ud.add_argument("--canal", required=True, choices=["linkedin", "email"])
     ud.add_argument("--draft", required=True)
-    ud.add_argument("--metadata-json", default="{}", help="JSON object with any of: " + ", ".join(METADATA_COLUMNS))
+    ud.add_argument("--metadata-json", default="{}", help="JSON object with any of: " + ", ".join(WRITABLE_METADATA_KEYS))
     ud.add_argument("--timestamp-draft", required=True, help="ISO timestamp of when the draft was written")
 
     bi = sub.add_parser("batch-insert", help="Insert a prepared list of leads in one write")

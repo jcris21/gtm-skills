@@ -137,7 +137,7 @@ If any check fails, rewrite the email before presenting it.
    ```
    python utils/sheet_queue.py upsert-draft --lead-id <attio-person-id> --canal email \
      --draft "<subject + body>" \
-     --metadata-json '{"prospecto": "<name>", "empresa": "<company>", "score": <0-10>, "signal_type": "<Outbound_Pipeline_Tracker.md label>", "situacion": "<1 line>", "email_disponible": "Y", "linkedin_disponible": "Y/N", "variable_personalizacion": "<var used>", "patron": "Pain-led/Value-led/Segment-fallback", "persona_matcheada": "<from context/icp.md>", "historia_prueba": "<from context/playbooks/segment-stories.md or —>", "angulo": "<1 line>", "qa_pass": "Y/N"}' \
+     --metadata-json '{"prospecto": "<name>", "empresa": "<company>", "score": <0-10>, "signal_type": "<Outbound_Pipeline_Tracker.md label>", "situacion": "<1 line>", "senal_detectada": "<the factual finding from signal-builder that justifies the score>", "key_data_points": "<var: value; var: value, from signal-builder>", "email_disponible": "Y", "linkedin_disponible": "Y/N", "variable_personalizacion": "<var used>", "fuente_variable": "<page/URL creative-variable pulled it from>", "patron": "Pain-led/Value-led/Segment-fallback", "persona_matcheada": "<from context/icp.md>", "historia_prueba": "<from context/playbooks/segment-stories.md or —>", "angulo": "<1 line>", "qa_pass": "Y/N", "qa_rationale": "<1 line: why it passed/failed \"Would I reply?\">"}' \
      --timestamp-draft <ISO now>
    ```
    Tell the user the draft was queued (Sheet row + Attio note URL). Do not ask "¿Envío esto ahora?" — the human approves/edits in the Sheet; n8n's manual-button flow (design doc §3.3) sends it and marks Attio afterward.
