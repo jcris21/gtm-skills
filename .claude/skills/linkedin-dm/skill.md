@@ -45,7 +45,7 @@ Ask (or infer from prospect info provided): is the sending account already conne
 
 ### Step 4: Draft Message 1
 - Connection note: one sentence, Situation + Inquisition, ≤300 characters, no Insight line (no room).
-- Direct message: Situation → Insight → Inquisition, 3 lines, under 50 words.
+- Direct message: Situation → Insight → Inquisition, 3 lines, under 50 words. using friendly tone
 
 ### Step 5: Draft follow-up touch
 See `reference/sequence-framework.md` for the full sequencing rules (timing, angle rotation, breakup template, cross-channel spacing). Summary:
@@ -58,7 +58,7 @@ See `reference/sequence-framework.md` for the full sequencing rules (timing, ang
 No email-3-style third touch on any tier — if the tiered follow-ups don't land, the channel isn't the fix; revisit the signal.
 
 ### Step 6: Run quality self-check
-- [ ] First line describes THEIR situation, not your product
+- [ ] First line describes THEIR situation, not your product starting with her/his name inside a short greeting e.g. Hi(first_name),
 - [ ] Connection note ≤300 characters (if applicable)
 - [ ] Direct message under 50 words
 - [ ] No links in Message 1
