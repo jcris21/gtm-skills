@@ -1,0 +1,394 @@
+{
+  "batch_name": "batch-2026-09-28-batch2",
+  "created_at": "2026-09-28T23:59:13.506333+00:00",
+  "csv_source": "context\\Batch2.csv",
+  "stats": {
+    "total_csv_rows": 20,
+    "duplicates_removed": 0,
+    "failed_pre_screen": 0,
+    "qualified_for_pipeline": 20
+  },
+  "qualified_leads": [
+    {
+      "lead_id": "kerry-wekelo-actualize-consulting",
+      "first_name": "Kerry",
+      "last_name": "Wekelo",
+      "email": "",
+      "linkedin_url": "https://www.linkedin.com/in/kerryelam",
+      "location": "Reston, VA , United States",
+      "job_title": "Chief Operating Officer Culture Infusion, HR and Operations",
+      "company_name": "Actualize Consulting",
+      "company_website": "http://www.actualizeconsulting.com",
+      "company_industry": "",
+      "company_size": "",
+      "pre_screen": {
+        "size_pass": null,
+        "industry_pass": null,
+        "geo_pass": true,
+        "note": "Insufficient CSV data — verified at signal-builder Step 0"
+      }
+    },
+    {
+      "lead_id": "scott-carper-ready-industries",
+      "first_name": "Scott",
+      "last_name": "Carper",
+      "email": "",
+      "linkedin_url": "https://www.linkedin.com/in/scott-carper-44426948",
+      "location": "Ventura, CA , United States",
+      "job_title": "Chief Executive Officer",
+      "company_name": "Ready Industries",
+      "company_website": "http://www.readyindustries.com.au/",
+      "company_industry": "",
+      "company_size": "",
+      "pre_screen": {
+        "size_pass": null,
+        "industry_pass": null,
+        "geo_pass": true,
+        "note": "Insufficient CSV data — verified at signal-builder Step 0"
+      }
+    },
+    {
+      "lead_id": "chris-wrightsman-dynamic-management-associates-llc",
+      "first_name": "Chris",
+      "last_name": "Wrightsman",
+      "email": "",
+      "linkedin_url": "https://www.linkedin.com/in/chris-wrightsman-b85a08309",
+      "location": "Los Angeles, CA , United States",
+      "job_title": "Chief Executive Officer",
+      "company_name": "Dynamic Management Associates, LLC",
+      "company_website": "http://www.dynmgt.com",
+      "company_industry": "",
+      "company_size": "",
+      "pre_screen": {
+        "size_pass": null,
+        "industry_pass": null,
+        "geo_pass": true,
+        "note": "Insufficient CSV data — verified at signal-builder Step 0"
+      }
+    },
+    {
+      "lead_id": "vikas-indore-tallysolutions",
+      "first_name": "Vikas",
+      "last_name": "Indore",
+      "email": "",
+      "linkedin_url": "https://www.linkedin.com/in/vikas-indore-42b5b617b",
+      "location": "United States",
+      "job_title": "Chief Executive Officer",
+      "company_name": "TallySolutions",
+      "company_website": "https://www.tallykw.com/",
+      "company_industry": "",
+      "company_size": "",
+      "pre_screen": {
+        "size_pass": null,
+        "industry_pass": null,
+        "geo_pass": true,
+        "note": "Insufficient CSV data — verified at signal-builder Step 0"
+      }
+    },
+    {
+      "lead_id": "franklin-byrd-albers-aerospace",
+      "first_name": "Franklin",
+      "last_name": "Byrd",
+      "email": "",
+      "linkedin_url": "https://www.linkedin.com/in/franklinbyrd",
+      "location": "TX , United States",
+      "job_title": "Chief Operating Officer",
+      "company_name": "Albers Aerospace",
+      "company_website": "http://www.thealbersgroup.com",
+      "company_industry": "",
+      "company_size": "",
+      "pre_screen": {
+        "size_pass": null,
+        "industry_pass": null,
+        "geo_pass": true,
+        "note": "Insufficient CSV data — verified at signal-builder Step 0"
+      }
+    },
+    {
+      "lead_id": "greg-sprink-admiral-distribution",
+      "first_name": "Greg",
+      "last_name": "Sprink",
+      "email": "",
+      "linkedin_url": "https://www.linkedin.com/in/greg-sprink",
+      "location": "Houston, TX , United States",
+      "job_title": "Chief Operating Officer",
+      "company_name": "Admiral Distribution",
+      "company_website": "http://www.admiraldistribution.com",
+      "company_industry": "",
+      "company_size": "",
+      "pre_screen": {
+        "size_pass": null,
+        "industry_pass": null,
+        "geo_pass": true,
+        "note": "Insufficient CSV data — verified at signal-builder Step 0"
+      }
+    },
+    {
+      "lead_id": "scott-lindner-lindner-logistics-llc",
+      "first_name": "Scott",
+      "last_name": "Lindner",
+      "email": "",
+      "linkedin_url": "https://www.linkedin.com/in/scott-lindner-46a82011",
+      "location": "Milwaukee, WI , United States",
+      "job_title": "Chief Executive Officer",
+      "company_name": "Lindner Logistics, LLC",
+      "company_website": "http://www.lindnerlogistics.com",
+      "company_industry": "",
+      "company_size": "",
+      "pre_screen": {
+        "size_pass": null,
+        "industry_pass": null,
+        "geo_pass": true,
+        "note": "Insufficient CSV data — verified at signal-builder Step 0"
+      }
+    },
+    {
+      "lead_id": "vigyan-kaushik-quantic",
+      "first_name": "Vigyan",
+      "last_name": "Kaushik",
+      "email": "",
+      "linkedin_url": "https://www.linkedin.com/in/vigyan",
+      "location": "Philadelphia, PA , United States",
+      "job_title": "Co-Founder and Chief Executive Officer",
+      "company_name": "Quantic",
+      "company_website": "http://getquantic.com",
+      "company_industry": "",
+      "company_size": "",
+      "pre_screen": {
+        "size_pass": null,
+        "industry_pass": null,
+        "geo_pass": true,
+        "note": "Insufficient CSV data — verified at signal-builder Step 0"
+      }
+    },
+    {
+      "lead_id": "wayne-wudyka-crdn",
+      "first_name": "Wayne",
+      "last_name": "Wudyka",
+      "email": "",
+      "linkedin_url": "https://www.linkedin.com/in/waynemwudyka",
+      "location": "Berkley, MI , United States",
+      "job_title": "Chief Executive Officer",
+      "company_name": "CRDN",
+      "company_website": "http://www.crdn.com/fr-ca/Pages/Locations/Alberta/Calgary.aspx",
+      "company_industry": "",
+      "company_size": "",
+      "pre_screen": {
+        "size_pass": null,
+        "industry_pass": null,
+        "geo_pass": true,
+        "note": "Insufficient CSV data — verified at signal-builder Step 0"
+      }
+    },
+    {
+      "lead_id": "ken-monroe-bostrom",
+      "first_name": "Ken",
+      "last_name": "Monroe",
+      "email": "",
+      "linkedin_url": "https://www.linkedin.com/in/ken-monroe-96196a7",
+      "location": "Monterey, CA , United States",
+      "job_title": "Chief Executive Officer",
+      "company_name": "Bostrom",
+      "company_website": "http://www.bostrom.com",
+      "company_industry": "",
+      "company_size": "",
+      "pre_screen": {
+        "size_pass": null,
+        "industry_pass": null,
+        "geo_pass": true,
+        "note": "Insufficient CSV data — verified at signal-builder Step 0"
+      }
+    },
+    {
+      "lead_id": "robert-loukusa-fcp-services-inc-serving-great-customers-nationwide-since-1990",
+      "first_name": "Robert",
+      "last_name": "Loukusa",
+      "email": "",
+      "linkedin_url": "https://www.linkedin.com/in/robert-loukusa-0b323918",
+      "location": "Saint Paul, MN , United States",
+      "job_title": "Chief Operating Officer",
+      "company_name": "FCP Services, Inc - Serving Great Customers Nationwide Since 1990",
+      "company_website": "https://www.fcpservices.com",
+      "company_industry": "",
+      "company_size": "",
+      "pre_screen": {
+        "size_pass": null,
+        "industry_pass": null,
+        "geo_pass": true,
+        "note": "Insufficient CSV data — verified at signal-builder Step 0"
+      }
+    },
+    {
+      "lead_id": "jerrold-krystoff-hospitality-development-group-inc",
+      "first_name": "Jerrold",
+      "last_name": "Krystoff",
+      "email": "",
+      "linkedin_url": "https://www.linkedin.com/in/jerrold-r-krystoff-154102121",
+      "location": "Fort Lauderdale, FL , United States",
+      "job_title": "Founder and Chief Executive Officer",
+      "company_name": "Hospitality Development Group, Inc",
+      "company_website": "http://hdgusa.com",
+      "company_industry": "",
+      "company_size": "",
+      "pre_screen": {
+        "size_pass": null,
+        "industry_pass": null,
+        "geo_pass": true,
+        "note": "Insufficient CSV data — verified at signal-builder Step 0"
+      }
+    },
+    {
+      "lead_id": "kimberly-shepherd-status-hospitality-management-l-l-c",
+      "first_name": "Kimberly",
+      "last_name": "Shepherd",
+      "email": "",
+      "linkedin_url": "https://www.linkedin.com/in/kimberly-shepherd-656433114",
+      "location": "American Fork, UT , United States",
+      "job_title": "Vice President of Operations and Director of Business Development",
+      "company_name": "Status Hospitality Management, L.L.C.",
+      "company_website": "http://www.statushospitality.com/",
+      "company_industry": "",
+      "company_size": "",
+      "pre_screen": {
+        "size_pass": null,
+        "industry_pass": null,
+        "geo_pass": true,
+        "note": "Insufficient CSV data — verified at signal-builder Step 0"
+      }
+    },
+    {
+      "lead_id": "kelly-long-the-arc-nature-coast",
+      "first_name": "Kelly",
+      "last_name": "Long",
+      "email": "",
+      "linkedin_url": "https://www.linkedin.com/in/kelly-long-32b054b0",
+      "location": "Brooksville, FL , United States",
+      "job_title": "Chief Operating Officer",
+      "company_name": "The Arc Nature Coast",
+      "company_website": "http://thearc-naturecoast.org",
+      "company_industry": "",
+      "company_size": "",
+      "pre_screen": {
+        "size_pass": null,
+        "industry_pass": null,
+        "geo_pass": true,
+        "note": "Insufficient CSV data — verified at signal-builder Step 0"
+      }
+    },
+    {
+      "lead_id": "terry-morrison-performance-group-inc",
+      "first_name": "Terry",
+      "last_name": "Morrison",
+      "email": "",
+      "linkedin_url": "https://www.linkedin.com/in/terry-morrison-59632715",
+      "location": "Omaha, NE , United States",
+      "job_title": "Chief Operating Officer",
+      "company_name": "Performance Group, Inc.",
+      "company_website": "http://formsguys.com",
+      "company_industry": "",
+      "company_size": "",
+      "pre_screen": {
+        "size_pass": null,
+        "industry_pass": null,
+        "geo_pass": true,
+        "note": "Insufficient CSV data — verified at signal-builder Step 0"
+      }
+    },
+    {
+      "lead_id": "diego-bellalta-grax",
+      "first_name": "Diego",
+      "last_name": "Bellalta",
+      "email": "",
+      "linkedin_url": "https://www.linkedin.com/in/diegobellalta",
+      "location": "Boston, MA , United States",
+      "job_title": "Vice President of Operations",
+      "company_name": "GRAX",
+      "company_website": "http://www.hardingpoint.com",
+      "company_industry": "",
+      "company_size": "",
+      "pre_screen": {
+        "size_pass": null,
+        "industry_pass": null,
+        "geo_pass": true,
+        "note": "Insufficient CSV data — verified at signal-builder Step 0"
+      }
+    },
+    {
+      "lead_id": "jevgenij-polonis-goramp",
+      "first_name": "Jevgenij",
+      "last_name": "Polonis",
+      "email": "",
+      "linkedin_url": "https://www.linkedin.com/in/jevgenij-jeff-polonis-324830ba",
+      "location": "United States",
+      "job_title": "Chief Executive Officer and Founder",
+      "company_name": "GoRamp",
+      "company_website": "https://www.goramp.com/time-slot-management",
+      "company_industry": "",
+      "company_size": "",
+      "pre_screen": {
+        "size_pass": null,
+        "industry_pass": null,
+        "geo_pass": true,
+        "note": "Insufficient CSV data — verified at signal-builder Step 0"
+      }
+    },
+    {
+      "lead_id": "frank-piliero-east-coast-warehouse-and-fulfillment",
+      "first_name": "Frank",
+      "last_name": "Piliero",
+      "email": "",
+      "linkedin_url": "https://www.linkedin.com/in/frank-piliero-6840422a0",
+      "location": "Exton, PA , United States",
+      "job_title": "Chief Operating Officer",
+      "company_name": "East Coast Warehouse and Fulfillment",
+      "company_website": "http://www.eastcoastwf.com",
+      "company_industry": "",
+      "company_size": "",
+      "pre_screen": {
+        "size_pass": null,
+        "industry_pass": null,
+        "geo_pass": true,
+        "note": "Insufficient CSV data — verified at signal-builder Step 0"
+      }
+    },
+    {
+      "lead_id": "david-brooks-armada-supply-chain-solutions",
+      "first_name": "David",
+      "last_name": "Brooks",
+      "email": "",
+      "linkedin_url": "https://www.linkedin.com/in/david-brooks-2b33686",
+      "location": "Pittsburgh, PA , United States",
+      "job_title": "Chief Operating Officer - Armada Transportation Solutions",
+      "company_name": "ARMADA Supply Chain Solutions",
+      "company_website": "http://www.armada.net",
+      "company_industry": "",
+      "company_size": "",
+      "pre_screen": {
+        "size_pass": null,
+        "industry_pass": null,
+        "geo_pass": true,
+        "note": "Insufficient CSV data — verified at signal-builder Step 0"
+      }
+    },
+    {
+      "lead_id": "shane-murray-accutite",
+      "first_name": "Shane",
+      "last_name": "Murray",
+      "email": "",
+      "linkedin_url": "https://www.linkedin.com/in/shane-murray-0653bb13",
+      "location": "Signal Hill, CA , United States",
+      "job_title": "President of Operations",
+      "company_name": "Accutite",
+      "company_website": "http://www.accutite.com",
+      "company_industry": "",
+      "company_size": "",
+      "pre_screen": {
+        "size_pass": null,
+        "industry_pass": null,
+        "geo_pass": true,
+        "note": "Insufficient CSV data — verified at signal-builder Step 0"
+      }
+    }
+  ],
+  "rejected_leads": []
+}

@@ -1,0 +1,11 @@
+{
+  "lead_id": "nilufer-durak-solvoyo",
+  "pipeline_status": "rejected_icp_gate",
+  "signal_score": 0,
+  "signal_type": null,
+  "rejection_reason": "Company is a supply chain planning software vendor (SaaS), not a prospect for Odoo ERP transformation. Industry mismatch - they sell technology, they don't need ERP implementation.",
+  "email_drafted": false,
+  "linkedin_drafted": false,
+  "sheet_row": null,
+  "processing_time_seconds": 30
+}

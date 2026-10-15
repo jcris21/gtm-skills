@@ -1,0 +1,10 @@
+[2026-09-14T22:07:52.475389+00:00] Batch batch-2026-14-09 created — 9 qualified, 0 rejected
+[2026-09-14T23:30:00+00:00] Processed ted-delong-trade-exchange-canada — REJECTED (B2B barter exchange not in ICP industries)
+[2026-09-14T23:45:00+00:00] Processed michael-laksns-network-services-company — COMPLETED (score 6, email + linkedin drafted, Sheet row 10)
+[2026-09-14T23:55:00+00:00] Processed mike-rose-blue-chip-engineered-products — REJECTED (acquired by Endries International 2026, no longer independent)
+[2026-09-14T23:30:00+00:00] Processed katie-macham-capstone-project-solutions — COMPLETED (score 5, linkedin drafted, Sheet row 8)
+[2026-09-14T23:45:00+00:00] Processed chris-heim-highjump — REJECTED (software vendor, 2000+ employees, no longer CEO)
+[2026-09-14T23:55:00+00:00] Processed sheri-kuhn-tcg-continuum-llc — COMPLETED (score 5, linkedin drafted, Sheet row 9)
+[2026-09-14T23:30:00+00:00] Processed steven-shepard-stealth-startup — REJECTED (700+ employees, staffing industry)
+[2026-09-14T23:45:00+00:00] Processed nilufer-durak-solvoyo — REJECTED (SaaS vendor, not an ERP prospect)
+[2026-09-14T23:55:00+00:00] Batch processing complete: 3 completed, 6 rejected at ICP gate

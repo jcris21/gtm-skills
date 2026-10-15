@@ -1,0 +1,50 @@
+[
+  {
+    "lead_id": "denise-gaynor-welburn-management-consulting-company",
+    "signal_score": 1,
+    "signal_type": "None",
+    "rejection_reason": "Welburn Management operates 45+ McDonald's restaurant locations across MD, DE, Northern VA, and DC. At typical McDonald's staffing levels (50-80 employees per location), this indicates a workforce of approximately 2,250-3,600+ employees, far exceeding the 250-employee ICP ceiling. While Food & Beverage and Franchise are ICP industries, the company size disqualifies it."
+  },
+  {
+    "lead_id": "christopher-scafario-dvirc",
+    "signal_score": 0,
+    "signal_type": "None",
+    "rejection_reason": "DVIRC is a non-profit economic development organization (NIST MEP affiliate) providing consulting services to manufacturers. Not a commercial enterprise in ICP industries — no physical operations, inventory, or supply chain complexity that the Odoo + AI offer addresses."
+  },
+  {
+    "lead_id": "sushil-pillai-the-joxel-group-llc",
+    "signal_score": 1,
+    "signal_type": "None",
+    "rejection_reason": "The Joxel Group is a healthcare and IT consulting firm providing EHR implementation, AI strategy, and fractional CIO services. While 'Professional Services' is an ICP industry, the ICP specifically targets project/inventory-heavy professional services — not healthcare IT consulting. Joxel is a B2B services firm with no physical operations, inventory management, or supply chain complexity that the Odoo + AI offer addresses."
+  },
+  {
+    "lead_id": "dave-licalzi-my-code",
+    "signal_score": 1,
+    "signal_type": "None",
+    "rejection_reason": "My Code is a multicultural media company and marketing agency. The ICP targets wholesale, distribution, import/export, e-commerce, light manufacturing, consumer goods, retail, logistics/3PL, construction/trades, field services, food & beverage, professional services (project/inventory-heavy), and franchise/multi-unit operators. A media/marketing agency does not fit any of these industries — it is a creative services business with no physical operations, inventory management, or supply chain complexity that the Odoo + AI offer addresses."
+  },
+  {
+    "lead_id": "lorne-campbell-prime-software-solutions",
+    "signal_score": 1,
+    "signal_type": "None",
+    "rejection_reason": "Prime Software Solutions is a logistics software vendor — they build WMS, TMS, EDI, and supply chain management software for the logistics industry. The ICP targets companies that USE software and have operational challenges with their ERP/systems, not companies that BUILD software. Prime is a product company (software vendor) with no physical operations, inventory management, or supply chain complexity that the Odoo + AI offer addresses."
+  },
+  {
+    "lead_id": "ranjodh-singh-awd",
+    "signal_score": null,
+    "signal_type": null,
+    "rejection_reason": "Geography: company is Australian (awdaustralia.com.au, Sydney HQ), not US or Canada"
+  },
+  {
+    "lead_id": "carol-mardis-ceo-consulting",
+    "signal_score": null,
+    "signal_type": null,
+    "rejection_reason": "Geography: Company is based in Moscow, Russia (ceoconsulting.ru — Russian-language site, Moscow address: 'Россия, 105064, г. Москва'). Serves clients in Russia, Belarus, Kazakhstan, Asia. Not US/Canada."
+  },
+  {
+    "lead_id": "robert-hougie-goods",
+    "signal_score": null,
+    "signal_type": null,
+    "rejection_reason": "Industry: Goods is a SaaS/WMS software vendor (mygoods.io) that provides warehouse management and order fulfillment platform. They are a technology provider, not a company in target ERP customer industries. Already has their own platform — not an ERP buyer."
+  }
+]

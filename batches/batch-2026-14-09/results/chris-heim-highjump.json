@@ -1,0 +1,11 @@
+{
+  "lead_id": "chris-heim-highjump",
+  "pipeline_status": "rejected_icp_gate",
+  "signal_score": 0,
+  "signal_type": null,
+  "rejection_reason": "Multiple ICP hard-gate failures: (1) Company is a software vendor (supply chain WMS/TMS), not an operations-heavy business that would use Odoo -- ICP targets wholesale, distribution, manufacturing, professional services, etc., not SaaS companies. (2) HighJump was acquired by Korber in 2017 and rebranded as Infios in 2025 (2,000+ employees, 5,000+ customers) -- company size 2,000+ far exceeds ICP's 10-250 band. (3) Contact Chris Heim is no longer CEO -- LinkedIn shows he is at 'Heim Leadership' (consulting/board role), not an active operational executive. No active executive or operational leader role per ICP person-level criteria.",
+  "email_drafted": false,
+  "linkedin_drafted": false,
+  "sheet_row": null,
+  "processing_time_seconds": 120
+}

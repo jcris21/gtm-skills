@@ -1,0 +1,11 @@
+{
+  "lead_id": "steven-shepard-stealth-startup",
+  "pipeline_status": "rejected_icp_gate",
+  "signal_score": 0,
+  "signal_type": null,
+  "rejection_reason": "Company size ~700+ employees exceeds ICP 10-250 range; industry is recruitment/staffing (not in ICP industry list)",
+  "email_drafted": false,
+  "linkedin_drafted": false,
+  "sheet_row": null,
+  "processing_time_seconds": 45
+}

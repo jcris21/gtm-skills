@@ -95,7 +95,7 @@ METADATA_COLUMNS = [
 # them, and positional writes (see upsert_draft/batch_insert_leads) shift every value
 # after the first reordered column out of alignment with the real header the moment
 # COLUMNS' order stops matching the Sheet.
-TRANSPARENCY_COLUMNS = ["senal_detectada", "key_data_points", "fuente_variable", "fuente_senal", "qa_rationale"]
+TRANSPARENCY_COLUMNS = ["senal_detectada", "key_data_points", "fuente_variable", "qa_rationale"]
 DRAFT_COLUMNS = ["draft_email", "editado_email", "draft_linkedin", "editado_linkedin"]
 APPROVAL_COLUMNS = ["aprobado", "enviado", "timestamp_draft"]
 COLUMNS = ["lead_id"] + METADATA_COLUMNS + DRAFT_COLUMNS + APPROVAL_COLUMNS + TRANSPARENCY_COLUMNS

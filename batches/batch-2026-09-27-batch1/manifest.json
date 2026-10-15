@@ -1,0 +1,185 @@
+{
+  "batch_name": "batch-2026-09-27-batch1",
+  "created_at": "2026-09-28T07:05:42.826708+00:00",
+  "csv_source": "context\\Batch1.csv",
+  "stats": {
+    "total_csv_rows": 9,
+    "duplicates_removed": 0,
+    "failed_pre_screen": 0,
+    "qualified_for_pipeline": 9
+  },
+  "qualified_leads": [
+    {
+      "lead_id": "ted-delong-trade-exchange-canada",
+      "first_name": "Ted",
+      "last_name": "Delong",
+      "email": "",
+      "linkedin_url": "https://www.linkedin.com/in/ted-delong-49391a2",
+      "location": "Sacramento, CA , United States",
+      "job_title": "Chief Executive Officer",
+      "company_name": "Trade Exchange Canada",
+      "company_website": "http://www.tradeexchangecanada.ca",
+      "company_industry": "",
+      "company_size": "",
+      "pre_screen": {
+        "size_pass": null,
+        "industry_pass": null,
+        "geo_pass": true,
+        "note": "Insufficient CSV data — verified at signal-builder Step 0"
+      }
+    },
+    {
+      "lead_id": "michael-laksns-network-services-company",
+      "first_name": "Michael",
+      "last_name": "Laksns",
+      "email": "",
+      "linkedin_url": "https://www.linkedin.com/in/michael-laksns-902b469b",
+      "location": "Longueuil, QC , Canada",
+      "job_title": "Chief Executive Officer",
+      "company_name": "Network Services Company",
+      "company_website": "http://www.networkdistribution.com",
+      "company_industry": "",
+      "company_size": "",
+      "pre_screen": {
+        "size_pass": null,
+        "industry_pass": null,
+        "geo_pass": true,
+        "note": "Insufficient CSV data — verified at signal-builder Step 0"
+      }
+    },
+    {
+      "lead_id": "mike-rose-blue-chip-engineered-products",
+      "first_name": "Mike",
+      "last_name": "Rose",
+      "email": "",
+      "linkedin_url": "https://www.linkedin.com/in/mike-rose-12b05b3",
+      "location": "Cincinnati, OH , United States",
+      "job_title": "Chief Executive Officer",
+      "company_name": "Blue Chip Engineered Products",
+      "company_website": "http://www.bcepi.com",
+      "company_industry": "",
+      "company_size": "",
+      "pre_screen": {
+        "size_pass": null,
+        "industry_pass": null,
+        "geo_pass": true,
+        "note": "Insufficient CSV data — verified at signal-builder Step 0"
+      }
+    },
+    {
+      "lead_id": "katie-macham-capstone-project-solutions",
+      "first_name": "Katie",
+      "last_name": "MacHam",
+      "email": "",
+      "linkedin_url": "https://www.linkedin.com/in/katie-macham-883304204",
+      "location": "Dartmouth, NS , Canada",
+      "job_title": "Chief Operating Officer",
+      "company_name": "Capstone Project Solutions",
+      "company_website": "http://www.capstoneprojectsolutions.com",
+      "company_industry": "",
+      "company_size": "",
+      "pre_screen": {
+        "size_pass": null,
+        "industry_pass": null,
+        "geo_pass": true,
+        "note": "Insufficient CSV data — verified at signal-builder Step 0"
+      }
+    },
+    {
+      "lead_id": "chris-heim-highjump",
+      "first_name": "Chris",
+      "last_name": "Heim",
+      "email": "",
+      "linkedin_url": "https://www.linkedin.com/in/chris-heim-a75a0",
+      "location": "Eden Prairie, MN , United States",
+      "job_title": "Chief Executive Officer",
+      "company_name": "Highjump",
+      "company_website": "http://www.highjump.com",
+      "company_industry": "",
+      "company_size": "",
+      "pre_screen": {
+        "size_pass": null,
+        "industry_pass": null,
+        "geo_pass": true,
+        "note": "Insufficient CSV data — verified at signal-builder Step 0"
+      }
+    },
+    {
+      "lead_id": "sheri-kuhn-tcg-continuum-llc",
+      "first_name": "Sheri",
+      "last_name": "Kuhn",
+      "email": "",
+      "linkedin_url": "https://www.linkedin.com/in/sheri-kuhn-653450308",
+      "location": "Dublin, OH , United States",
+      "job_title": "Chief Operating Officer",
+      "company_name": "TCG Continuum, LLC",
+      "company_website": "http://www.tcgcontinuum.com",
+      "company_industry": "",
+      "company_size": "",
+      "pre_screen": {
+        "size_pass": null,
+        "industry_pass": null,
+        "geo_pass": true,
+        "note": "Insufficient CSV data — verified at signal-builder Step 0"
+      }
+    },
+    {
+      "lead_id": "steven-shepard-stealth-startup",
+      "first_name": "Steven",
+      "last_name": "Shepard",
+      "email": "",
+      "linkedin_url": "https://www.linkedin.com/in/stevenpshepard",
+      "location": "CA , United States",
+      "job_title": "Co-Founder and Chief Executive Officer",
+      "company_name": "Stealth Startup",
+      "company_website": "http://www.avanceservices.com",
+      "company_industry": "",
+      "company_size": "",
+      "pre_screen": {
+        "size_pass": null,
+        "industry_pass": null,
+        "geo_pass": true,
+        "note": "Insufficient CSV data — verified at signal-builder Step 0"
+      }
+    },
+    {
+      "lead_id": "david-morgan-d-w-morgan-company",
+      "first_name": "David",
+      "last_name": "Morgan",
+      "email": "",
+      "linkedin_url": "https://www.linkedin.com/in/david-morgan-2a38441",
+      "location": "Danville, CA , United States",
+      "job_title": "Chief Executive Officer",
+      "company_name": "d.w. Morgan Company",
+      "company_website": "http://www.dwmorgan.com/",
+      "company_industry": "",
+      "company_size": "",
+      "pre_screen": {
+        "size_pass": null,
+        "industry_pass": null,
+        "geo_pass": true,
+        "note": "Insufficient CSV data — verified at signal-builder Step 0"
+      }
+    },
+    {
+      "lead_id": "nilufer-durak-solvoyo",
+      "first_name": "Nilufer",
+      "last_name": "Durak",
+      "email": "",
+      "linkedin_url": "https://www.linkedin.com/in/niluferdurak",
+      "location": "Boston, MA , United States",
+      "job_title": "Chief Operating Officer, Head of Customer Success",
+      "company_name": "Solvoyo",
+      "company_website": "https://www.solvoyo.com",
+      "company_industry": "",
+      "company_size": "",
+      "pre_screen": {
+        "size_pass": null,
+        "industry_pass": null,
+        "geo_pass": true,
+        "note": "Insufficient CSV data — verified at signal-builder Step 0"
+      }
+    }
+  ],
+  "rejected_leads": []
+}

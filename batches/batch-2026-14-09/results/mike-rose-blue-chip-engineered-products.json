@@ -1,0 +1,11 @@
+{
+  "lead_id": "mike-rose-blue-chip-engineered-products",
+  "pipeline_status": "rejected_icp_gate",
+  "signal_score": 0,
+  "signal_type": null,
+  "rejection_reason": "Company was acquired by Endries International in 2026. The listed contact (Mike Rose as CEO) is outdated -- founder Ken Sanker now serves as General Manager under Endries. Acquired company is integrating into parent's systems and is not an independent technology decision-maker. ERP/technology decisions now controlled by Endries International.",
+  "email_drafted": false,
+  "linkedin_drafted": false,
+  "sheet_row": null,
+  "processing_time_seconds": 75
+}

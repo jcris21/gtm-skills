@@ -1,0 +1,33 @@
+{
+  "batch_name": "batch-ted-delong",
+  "created_at": "2026-09-14T21:37:19.821755+00:00",
+  "csv_source": "context\\ted_delong_only.csv",
+  "stats": {
+    "total_csv_rows": 1,
+    "duplicates_removed": 0,
+    "failed_pre_screen": 0,
+    "qualified_for_pipeline": 1
+  },
+  "qualified_leads": [
+    {
+      "lead_id": "ted-delong-trade-exchange-canada",
+      "first_name": "Ted",
+      "last_name": "Delong",
+      "email": "",
+      "linkedin_url": "https://www.linkedin.com/in/ted-delong-49391a2",
+      "location": "Sacramento, CA , United States",
+      "job_title": "Chief Executive Officer",
+      "company_name": "Trade Exchange Canada",
+      "company_website": "http://www.tradeexchangecanada.ca",
+      "company_industry": "",
+      "company_size": "",
+      "pre_screen": {
+        "size_pass": null,
+        "industry_pass": null,
+        "geo_pass": true,
+        "note": "Insufficient CSV data — verified at signal-builder Step 0"
+      }
+    }
+  ],
+  "rejected_leads": []
+}

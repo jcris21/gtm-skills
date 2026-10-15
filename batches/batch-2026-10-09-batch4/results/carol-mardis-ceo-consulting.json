@@ -1,0 +1,11 @@
+{
+  "lead_id": "carol-mardis-ceo-consulting",
+  "pipeline_status": "rejected_icp_gate",
+  "signal_score": null,
+  "signal_type": null,
+  "rejection_reason": "Geography: Company is based in Moscow, Russia (ceoconsulting.ru — Russian-language site, Moscow address: 'Россия, 105064, г. Москва'). Serves clients in Russia, Belarus, Kazakhstan, Asia. Not US/Canada.",
+  "email_drafted": false,
+  "linkedin_drafted": false,
+  "sheet_row": null,
+  "processing_time_seconds": 15
+}

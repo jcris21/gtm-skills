@@ -1,0 +1,11 @@
+{
+  "lead_id": "sheri-kuhn-tcg-continuum-llc",
+  "pipeline_status": "completed",
+  "signal_score": 5,
+  "signal_type": "Segment-fallback: 3PL operational complexity",
+  "rejection_reason": null,
+  "email_drafted": false,
+  "linkedin_drafted": true,
+  "sheet_row": 9,
+  "processing_time_seconds": 150
+}

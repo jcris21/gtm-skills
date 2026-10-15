@@ -1,0 +1,394 @@
+{
+  "batch_name": "batch-2026-09-28-batch3",
+  "created_at": "2026-09-29T01:09:07.218827+00:00",
+  "csv_source": "context\\Batch3.csv",
+  "stats": {
+    "total_csv_rows": 20,
+    "duplicates_removed": 0,
+    "failed_pre_screen": 0,
+    "qualified_for_pipeline": 20
+  },
+  "qualified_leads": [
+    {
+      "lead_id": "michelle-harris-our-serviceworks",
+      "first_name": "Michelle",
+      "last_name": "Harris",
+      "email": "",
+      "linkedin_url": "https://www.linkedin.com/in/michelle-harris-7534591",
+      "location": "Carrollton, TX , United States",
+      "job_title": "President and Chief Executive Officer",
+      "company_name": "Our Serviceworks",
+      "company_website": "https://ourserviceworks.com/",
+      "company_industry": "",
+      "company_size": "",
+      "pre_screen": {
+        "size_pass": null,
+        "industry_pass": null,
+        "geo_pass": true,
+        "note": "Insufficient CSV data — verified at signal-builder Step 0"
+      }
+    },
+    {
+      "lead_id": "denise-gaynor-welburn-management-consulting-company",
+      "first_name": "Denise",
+      "last_name": "Gaynor",
+      "email": "",
+      "linkedin_url": "https://www.linkedin.com/in/denise-gaynor-58a028102",
+      "location": "Washington, DC , United States",
+      "job_title": "Vice President of Operations at Welburn Management",
+      "company_name": "Welburn Management & Consulting Company",
+      "company_website": "http://www.welburnmanagement.com",
+      "company_industry": "",
+      "company_size": "",
+      "pre_screen": {
+        "size_pass": null,
+        "industry_pass": null,
+        "geo_pass": true,
+        "note": "Insufficient CSV data — verified at signal-builder Step 0"
+      }
+    },
+    {
+      "lead_id": "kirby-silver-guardian-worldwide",
+      "first_name": "Kirby",
+      "last_name": "Silver",
+      "email": "",
+      "linkedin_url": "https://www.linkedin.com/in/kirby-silver-7ba129270",
+      "location": "New York, NY , United States",
+      "job_title": "Chief Operating Officer",
+      "company_name": "Guardian Worldwide",
+      "company_website": "http://www.guardianmade.com/",
+      "company_industry": "",
+      "company_size": "",
+      "pre_screen": {
+        "size_pass": null,
+        "industry_pass": null,
+        "geo_pass": true,
+        "note": "Insufficient CSV data — verified at signal-builder Step 0"
+      }
+    },
+    {
+      "lead_id": "sushil-pillai-the-joxel-group-llc",
+      "first_name": "Sushil",
+      "last_name": "Pillai",
+      "email": "",
+      "linkedin_url": "https://www.linkedin.com/in/sushil-pillai-22a2033",
+      "location": "Mequon, WI , United States",
+      "job_title": "President and Chief Executive Officer",
+      "company_name": "The Joxel Group, LLC",
+      "company_website": "https://www.thejoxelgroup.com",
+      "company_industry": "",
+      "company_size": "",
+      "pre_screen": {
+        "size_pass": null,
+        "industry_pass": null,
+        "geo_pass": true,
+        "note": "Insufficient CSV data — verified at signal-builder Step 0"
+      }
+    },
+    {
+      "lead_id": "danny-davies-c-c-group",
+      "first_name": "Danny",
+      "last_name": "Davies",
+      "email": "",
+      "linkedin_url": "https://www.linkedin.com/in/danny-davies-0b69131",
+      "location": "Lenexa, KS , United States",
+      "job_title": "President and Chief Executive Officer",
+      "company_name": "C & C Group",
+      "company_website": "http://www.c-cgroup.com",
+      "company_industry": "",
+      "company_size": "",
+      "pre_screen": {
+        "size_pass": null,
+        "industry_pass": null,
+        "geo_pass": true,
+        "note": "Insufficient CSV data — verified at signal-builder Step 0"
+      }
+    },
+    {
+      "lead_id": "dustin-williamson-jw-enterprise",
+      "first_name": "Dustin",
+      "last_name": "Williamson",
+      "email": "",
+      "linkedin_url": "https://www.linkedin.com/in/dustin-williamson-b98207288",
+      "location": "Midland, TX , United States",
+      "job_title": "Chief Operating Officer",
+      "company_name": "Jw Enterprise",
+      "company_website": "http://jwenterpriseoperations.com",
+      "company_industry": "",
+      "company_size": "",
+      "pre_screen": {
+        "size_pass": null,
+        "industry_pass": null,
+        "geo_pass": true,
+        "note": "Insufficient CSV data — verified at signal-builder Step 0"
+      }
+    },
+    {
+      "lead_id": "dave-licalzi-my-code",
+      "first_name": "Dave",
+      "last_name": "Licalzi",
+      "email": "",
+      "linkedin_url": "https://www.linkedin.com/in/davelicalzi",
+      "location": "New York, NY , United States",
+      "job_title": "Chief Operating Officer",
+      "company_name": "My Code",
+      "company_website": "http://www.hcodemedia.com",
+      "company_industry": "",
+      "company_size": "",
+      "pre_screen": {
+        "size_pass": null,
+        "industry_pass": null,
+        "geo_pass": true,
+        "note": "Insufficient CSV data — verified at signal-builder Step 0"
+      }
+    },
+    {
+      "lead_id": "j-banneker-supply-chain-solutions-inc",
+      "first_name": "J.",
+      "last_name": "",
+      "email": "",
+      "linkedin_url": "https://www.linkedin.com/in/juniorjabbie",
+      "location": "RI , United States",
+      "job_title": "President and Chief Executive Officer",
+      "company_name": "Banneker Supply Chain Solutions, Inc.",
+      "company_website": "https://www.banneker.com",
+      "company_industry": "",
+      "company_size": "",
+      "pre_screen": {
+        "size_pass": null,
+        "industry_pass": null,
+        "geo_pass": true,
+        "note": "Insufficient CSV data — verified at signal-builder Step 0"
+      }
+    },
+    {
+      "lead_id": "lorne-campbell-prime-software-solutions",
+      "first_name": "Lorne",
+      "last_name": "Campbell",
+      "email": "",
+      "linkedin_url": "https://www.linkedin.com/in/lorne-campbell-45368417a",
+      "location": "Springdale, AR , United States",
+      "job_title": "Chief Executive Officer",
+      "company_name": "Prime Software Solutions",
+      "company_website": "http://www.primesoftwaresolutions.com",
+      "company_industry": "",
+      "company_size": "",
+      "pre_screen": {
+        "size_pass": null,
+        "industry_pass": null,
+        "geo_pass": true,
+        "note": "Insufficient CSV data — verified at signal-builder Step 0"
+      }
+    },
+    {
+      "lead_id": "carlee-palmer-viable-retail-solutions",
+      "first_name": "Carlee",
+      "last_name": "Palmer",
+      "email": "",
+      "linkedin_url": "https://www.linkedin.com/in/carlee-palmer-b5923290",
+      "location": "Long Beach, CA , United States",
+      "job_title": "Chief Executive Officer",
+      "company_name": "Viable Retail Solutions",
+      "company_website": "http://viableretail.com",
+      "company_industry": "",
+      "company_size": "",
+      "pre_screen": {
+        "size_pass": null,
+        "industry_pass": null,
+        "geo_pass": true,
+        "note": "Insufficient CSV data — verified at signal-builder Step 0"
+      }
+    },
+    {
+      "lead_id": "christopher-scafario-dvirc",
+      "first_name": "Christopher",
+      "last_name": "Scafario",
+      "email": "",
+      "linkedin_url": "https://www.linkedin.com/in/cscafario",
+      "location": "Philadelphia, PA , United States",
+      "job_title": "President & Chief Executive Officer",
+      "company_name": "DVIRC",
+      "company_website": "https://www.dvirc.org",
+      "company_industry": "",
+      "company_size": "",
+      "pre_screen": {
+        "size_pass": null,
+        "industry_pass": null,
+        "geo_pass": true,
+        "note": "Insufficient CSV data — verified at signal-builder Step 0"
+      }
+    },
+    {
+      "lead_id": "freddy-flores-ecs-procurement-group",
+      "first_name": "Freddy",
+      "last_name": "Flores",
+      "email": "",
+      "linkedin_url": "https://www.linkedin.com/in/freddy-flores-6793132a",
+      "location": "Houston, TX , United States",
+      "job_title": "Chief Operating Officer",
+      "company_name": "ECS Procurement Group",
+      "company_website": "http://www.ecsupply.com",
+      "company_industry": "",
+      "company_size": "",
+      "pre_screen": {
+        "size_pass": null,
+        "industry_pass": null,
+        "geo_pass": true,
+        "note": "Insufficient CSV data — verified at signal-builder Step 0"
+      }
+    },
+    {
+      "lead_id": "jerry-kelley-power-electric",
+      "first_name": "Jerry",
+      "last_name": "Kelley",
+      "email": "",
+      "linkedin_url": "https://www.linkedin.com/in/jerry-kelley-84839335",
+      "location": "Saint Paul, MN , United States",
+      "job_title": "Chief Executive Officer",
+      "company_name": "Power Electric",
+      "company_website": "http://www.powerelectric.com",
+      "company_industry": "",
+      "company_size": "",
+      "pre_screen": {
+        "size_pass": null,
+        "industry_pass": null,
+        "geo_pass": true,
+        "note": "Insufficient CSV data — verified at signal-builder Step 0"
+      }
+    },
+    {
+      "lead_id": "ranjodh-singh-awd",
+      "first_name": "Ranjodh",
+      "last_name": "Singh",
+      "email": "",
+      "linkedin_url": "https://www.linkedin.com/in/ranjodh-singh-1493361a2",
+      "location": "Toronto, ON , Canada",
+      "job_title": "Chief Executive Officer",
+      "company_name": "AWD",
+      "company_website": "http://www.awdaustralia.com.au",
+      "company_industry": "",
+      "company_size": "",
+      "pre_screen": {
+        "size_pass": null,
+        "industry_pass": null,
+        "geo_pass": true,
+        "note": "Insufficient CSV data — verified at signal-builder Step 0"
+      }
+    },
+    {
+      "lead_id": "bonnie-lee-rub-a-tub-refinishing-ltd",
+      "first_name": "Bonnie",
+      "last_name": "Lee",
+      "email": "",
+      "linkedin_url": "https://www.linkedin.com/in/bonnie-lee-406028193",
+      "location": "Toronto, ON , Canada",
+      "job_title": "Chief Executive Officer",
+      "company_name": "Rub a Tub Refinishing Ltd.",
+      "company_website": "http://www.rubinc.com",
+      "company_industry": "",
+      "company_size": "",
+      "pre_screen": {
+        "size_pass": null,
+        "industry_pass": null,
+        "geo_pass": true,
+        "note": "Insufficient CSV data — verified at signal-builder Step 0"
+      }
+    },
+    {
+      "lead_id": "heather-stewart-apg-solutions",
+      "first_name": "Heather",
+      "last_name": "Stewart",
+      "email": "",
+      "linkedin_url": "https://www.linkedin.com/in/heathertstewart",
+      "location": "Saint Paul, MN , United States",
+      "job_title": "Chief Executive Officer and President",
+      "company_name": "apg Solutions",
+      "company_website": "https://www.apgsolutions.com/",
+      "company_industry": "",
+      "company_size": "",
+      "pre_screen": {
+        "size_pass": null,
+        "industry_pass": null,
+        "geo_pass": true,
+        "note": "Insufficient CSV data — verified at signal-builder Step 0"
+      }
+    },
+    {
+      "lead_id": "johnny-jones-lynx-labeling-inc",
+      "first_name": "Johnny",
+      "last_name": "Jones",
+      "email": "",
+      "linkedin_url": "https://www.linkedin.com/in/johnny-jones-67b33812a",
+      "location": "Glasgow, KY , United States",
+      "job_title": "Chief Operating Officer and Vice President",
+      "company_name": "Lynx Labeling Inc.",
+      "company_website": "http://www.lynxlabeling.com",
+      "company_industry": "",
+      "company_size": "",
+      "pre_screen": {
+        "size_pass": null,
+        "industry_pass": null,
+        "geo_pass": true,
+        "note": "Insufficient CSV data — verified at signal-builder Step 0"
+      }
+    },
+    {
+      "lead_id": "sonya-nguyen-bn-management-co",
+      "first_name": "Sonya",
+      "last_name": "Nguyen",
+      "email": "",
+      "linkedin_url": "https://www.linkedin.com/in/sonya-nguyen-b43674119",
+      "location": "Harvey, LA , United States",
+      "job_title": "Chief Executive Officer",
+      "company_name": "BN Management Co",
+      "company_website": "http://www.bnmanagementco.com",
+      "company_industry": "",
+      "company_size": "",
+      "pre_screen": {
+        "size_pass": null,
+        "industry_pass": null,
+        "geo_pass": true,
+        "note": "Insufficient CSV data — verified at signal-builder Step 0"
+      }
+    },
+    {
+      "lead_id": "carol-mardis-ceo-consulting",
+      "first_name": "Carol",
+      "last_name": "Mardis",
+      "email": "",
+      "linkedin_url": "https://www.linkedin.com/in/carol-mardis-8a111849",
+      "location": "Keokuk, IA , United States",
+      "job_title": "Chief Executive Officer and Owner",
+      "company_name": "CEO Consulting",
+      "company_website": "http://www.ceoconsulting.ru",
+      "company_industry": "",
+      "company_size": "",
+      "pre_screen": {
+        "size_pass": null,
+        "industry_pass": null,
+        "geo_pass": true,
+        "note": "Insufficient CSV data — verified at signal-builder Step 0"
+      }
+    },
+    {
+      "lead_id": "robert-hougie-goods",
+      "first_name": "Robert",
+      "last_name": "Hougie",
+      "email": "",
+      "linkedin_url": "https://www.linkedin.com/in/robert-hougie-0a9425351",
+      "location": "United States",
+      "job_title": "Chief Executive Officer",
+      "company_name": "Goods",
+      "company_website": "https://mygoods.io/",
+      "company_industry": "",
+      "company_size": "",
+      "pre_screen": {
+        "size_pass": null,
+        "industry_pass": null,
+        "geo_pass": true,
+        "note": "Insufficient CSV data — verified at signal-builder Step 0"
+      }
+    }
+  ],
+  "rejected_leads": []
+}

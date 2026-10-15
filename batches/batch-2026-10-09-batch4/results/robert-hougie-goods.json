@@ -1,0 +1,11 @@
+{
+  "lead_id": "robert-hougie-goods",
+  "pipeline_status": "rejected_icp_gate",
+  "signal_score": null,
+  "signal_type": null,
+  "rejection_reason": "Industry: Goods is a SaaS/WMS software vendor (mygoods.io) that provides warehouse management and order fulfillment platform. They are a technology provider, not a company in target ERP customer industries. Already has their own platform — not an ERP buyer.",
+  "email_drafted": false,
+  "linkedin_drafted": false,
+  "sheet_row": null,
+  "processing_time_seconds": 15
+}

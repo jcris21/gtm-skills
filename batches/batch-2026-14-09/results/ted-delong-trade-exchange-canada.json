@@ -1,0 +1,11 @@
+{
+  "lead_id": "ted-delong-trade-exchange-canada",
+  "pipeline_status": "rejected_icp_gate",
+  "signal_score": 0,
+  "signal_type": null,
+  "rejection_reason": "Company is a B2B barter exchange / commercial trade network (financial services marketplace), not in ICP target industries (Wholesale, Distribution, Manufacturing, etc.). Additionally, company size uncertain (~10-15 employees from RocketReach, borderline for 10-250 ICP range), and title inconsistency: Ted Delong listed as both CEO and 'Trade Exchange Developer' based in Sacramento while company HQ is in Kelowna, BC.",
+  "email_drafted": false,
+  "linkedin_drafted": false,
+  "sheet_row": null,
+  "processing_time_seconds": 90
+}
